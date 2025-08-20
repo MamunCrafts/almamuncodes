@@ -365,14 +365,15 @@ function Contact() {
                 <MessageCircle className="mr-2 h-5 w-5" />
                 Start a Conversation
               </Button>
-              <Button
+                <Button
                 size="lg"
                 variant="outline"
                 className="border-white/20 text-black hover:text-white hover:bg-white/10 transform hover:scale-105 transition-all duration-300 px-8"
-              >
+                onClick={() => window.location.href = "https://mamun.me"}
+                >
                 <Globe className="mr-2 h-5 w-5" />
                 View My Portfolio
-              </Button>
+                </Button>
             </div>
           </div>
         </div>
