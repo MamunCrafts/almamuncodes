@@ -44,6 +44,16 @@ export default function Projects() {
       gradient: "from-blue-500 to-purple-600",
     },
     {
+      title:"Quran Analyzer",
+      url:"https://quran-analyzer.vercel.app/",
+      liveUrl: "https://quran-analyzer.vercel.app/",
+      description:
+        "An advanced Quran analysis tool that provides linguistic insights, word frequency analysis, and thematic categorization using NLP techniques.",
+      image: "/project-quran-analyzer.png",
+      technologies: ["React.js","Next.js", "TypeScript", "Node.Js", "MongoDb"],
+
+    },
+    {
       title: "TalentPro Global",
       url: "www.talentpro.global",
       description:
