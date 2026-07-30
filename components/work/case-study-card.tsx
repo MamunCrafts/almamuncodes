@@ -4,7 +4,7 @@ import { ArrowUpRight } from "lucide-react"
 import type { CaseStudy } from "@/lib/case-studies"
 
 export function CaseStudyCard({ study, index }: { study: CaseStudy; index: number }) {
-  const showMetric = study.metric.value !== "TODO"
+  const metric = study.metric
   return (
     <Link
       href={`/work/${study.slug}`}
@@ -29,10 +29,10 @@ export function CaseStudyCard({ study, index }: { study: CaseStudy; index: numbe
       </div>
 
       <div className="flex items-start justify-between sm:col-span-4 sm:flex-col sm:items-end sm:justify-between">
-        {showMetric ? (
+        {metric ? (
           <div className="sm:text-right">
-            <p className="font-display text-3xl text-ink">{study.metric.value}</p>
-            <p className="label mt-1">{study.metric.label}</p>
+            <p className="font-display text-3xl text-ink">{metric.value}</p>
+            <p className="label mt-1">{metric.label}</p>
           </div>
         ) : (
           <span />

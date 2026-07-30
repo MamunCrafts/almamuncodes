@@ -71,8 +71,7 @@ export const coreStack = [
 export const proof: ProofPoint[] = [
   { value: "4+ yrs", label: "Shipping production web apps" },
   { value: "2×", label: "API throughput at Fanfare" },
-  { value: "40%", label: "Faster feature delivery" },
-  { value: "Rank 5", label: "IEEE Xtreme 14.0 (Bangladesh)" },
+  { value: "~60%", label: "Smaller API payloads at Fanfare" },
 ]
 
 export const capabilities: Capability[] = [
@@ -117,7 +116,6 @@ export const skillGroups: SkillGroup[] = [
 export const highlights = [
   { name: "IEEE Xtreme 14.0", detail: "Bangladesh Rank 5 · Global Rank 272", year: "2020" },
   { name: "Codeforces", detail: "600+ problems solved", year: "2018–2022" },
-  { name: "LeetCode", detail: "100+ problems solved", year: "2019–2024" },
 ]
 
 // Highlighted credentials, shown on both Home and About via <CredentialCard>.

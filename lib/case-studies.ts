@@ -25,14 +25,15 @@ export const caseStudySchema = z.object({
   title: z.string(),
   // one-sentence problem framing, used on cards
   teaser: z.string(),
-  // one hard metric for the card; keep honest, mark TODO if unknown
-  metric: z.object({ value: z.string(), label: z.string() }),
+  // one hard metric for the card; omit entirely if there is no real number
+  metric: z.object({ value: z.string(), label: z.string() }).optional(),
   cover: z.string(),
-  year: z.string(),
+  // omit when the year is not known; the header renders without it
+  year: z.string().optional(),
   // sticky sidebar metadata
   meta: z.object({
     role: z.string(),
-    duration: z.string(),
+    duration: z.string().optional(),
     team: z.string(),
     stack: z.array(z.string()),
     links: z.array(z.object({ label: z.string(), href: z.string() })).default([]),

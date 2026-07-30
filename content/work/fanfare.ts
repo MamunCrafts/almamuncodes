@@ -1,8 +1,7 @@
 import type { CaseStudy } from "@/lib/case-studies"
 
-// Written from the real project (Fanfare, a consumer social app on Android and
-// on the Play Store, built on a NestJS/GraphQL stack). Numbers marked TODO are
-// the ones only you can verify. Fill them in; do not invent them.
+// Fanfare, a consumer social app on Android (Play Store), with a NestJS/GraphQL
+// backend and admin console.
 export const fanfare: CaseStudy = {
   slug: "fanfare",
   title: "Fanfare: a social platform's backend",
@@ -13,7 +12,7 @@ export const fanfare: CaseStudy = {
     label: "API throughput",
   },
   cover: "/fanfare-case-study-bg-talentpro.webp",
-  year: "2023",
+  year: "2025",
   meta: {
     role: "Full-Stack Developer (backend-leaning)",
     duration: "2022–2025",
@@ -49,6 +48,10 @@ export const fanfare: CaseStudy = {
       heading: "Real-time notifications via Firebase",
       body: "Wired interaction events (comment, reaction, follow) into Firebase Cloud Messaging so pushes land immediately, keeping the notification path off the request/response cycle.",
     },
+    {
+      heading: "Made the hot paths fast, and kept them safe",
+      body: "Profiled the heaviest resolvers and refactored them, which roughly halved their compute time and cut memory use by about a third. I also kept high unit-test coverage on the API layer, which held post-deployment bugs down as the surface grew.",
+    },
   ],
   architecture: {
     caption:
@@ -70,12 +73,9 @@ export const fanfare: CaseStudy = {
     ],
   },
   outcome: [
-    "Doubled API throughput and cut latency by ~45% by reworking the GraphQL schema and logic layers.",
-    "Cut data transferred per request by ~60% by tightening GraphQL queries and REST endpoints.",
-    "Reached 100% unit-test coverage, cutting post-deployment bugs by ~75%.",
-    "Refactored hot paths to reduce compute time by ~50% and memory use by ~35%.",
-    "Built secure role-based access control and an e-commerce checkout flow, lifting user engagement by ~20%.",
-    "The admin console reused the same API to give the ops team user management, moderation and usage visibility.",
+    "Doubled API throughput and cut latency by ~45% after reworking the GraphQL schema and resolver logic.",
+    "Cut the data sent per request by ~60% by tightening GraphQL selections and REST payloads.",
+    "Added role-based access control and an e-commerce checkout flow, and gave the ops team a matching admin console for user management, moderation and usage.",
   ],
   retro:
     "I'd invest earlier in load and query observability. A lot of the tuning was reactive; we found the slow screens by using the app. With per-resolver timing and slow-query logging from day one, we'd have caught the N+1 and cache-miss hotspots before users felt them. I'd also formalise cache invalidation as an event the write path emits, rather than something each mutation remembers to do.",

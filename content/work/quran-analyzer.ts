@@ -1,72 +1,65 @@
 import type { CaseStudy } from "@/lib/case-studies"
 
-// Written from the real project (Quran Analyzer, a full-stack NLP/text-analysis
-// tool, live on Vercel). Verify the TODO items before publishing.
+// Quran Analyzer, a login-gated Quran study workspace built at Talent Pro.
+// NOTE (for the owner): this copy is reconstructed from the live app's visible
+// behaviour (reading, private notes, audio recitations, accounts). Please read
+// it once and correct anything that does not match how it actually works.
 export const quranAnalyzer: CaseStudy = {
   slug: "quran-analyzer",
-  title: "Quran Analyzer: text analysis at scale",
+  title: "Quran Analyzer: a study workspace",
   teaser:
-    "A full-stack tool for linguistic analysis of a large, fixed corpus: word frequency, thematic grouping and fast search over the whole text.",
-  metric: {
-    // TODO: a real number, e.g. corpus size (verses/tokens) or search latency.
-    value: "6,236",
-    label: "verses indexed", // TODO: confirm the corpus size you actually index
-  },
+    "A login-gated workspace for studying the Quran: read the surahs, keep private notes against specific passages, and listen to audio recitations in one place.",
   cover: "/project-quran-analyzer.png",
-  year: "2023",
   meta: {
-    role: "Full-Stack Developer (solo)",
-    duration: "TODO (e.g. side project, ~6 weeks)",
-    team: "Solo",
+    role: "Full-Stack Developer",
+    team: "3 people",
     stack: ["Next.js", "React", "TypeScript", "Node.js", "MongoDB"],
-    links: [{ label: "Live", href: "https://quran-analyzer.vercel.app/" }],
+    links: [],
   },
   context:
-    "A personal project to make a large religious text explorable, not just readable. The corpus is fixed and well-structured, which is exactly the setup where precomputation pays off. Built solo, end to end.",
+    "Quran Analyzer is a study tool built at Talent Pro. Most Quran apps are built for reading; this one is built for studying, so a signed-in reader can move through the surahs, keep their own notes against specific passages, and listen to audio recitations in the same place. I worked on it full-stack as part of a team of three.",
   problem:
-    "Answering questions like 'how often does this root appear, and where?' or 'group these passages by theme' means scanning and aggregating across the entire text. Doing that per request, live, is wasteful and slow: the data never changes, but a naive implementation recomputes the same analysis on every visit.",
+    "Reading and studying are different jobs. A plain reader gets you through the text; studying means returning to the same passages, keeping your own notes on them, and hearing them recited. The real work is stitching those three things (the text, a person's private notes, and audio) into one place that stays in sync per account.",
   constraints: [
-    "A fixed corpus that never changes at runtime, so anything computed live is computed needlessly.",
-    "Text search and frequency analysis have to feel instant in the browser.",
-    "Solo build on a hobby budget: it had to run cheaply and deploy with zero ops.",
+    "Everything is per-account and private, so the app is login-gated and a user's notes and progress have to stay tied to them across sessions and devices.",
+    "Audio recitations are large files, so they have to stream and load on demand rather than ship with the page.",
+    "The text is fixed and structured by surah and verse, so notes and audio need to anchor to a specific verse reliably.",
   ],
   approach: [
     {
-      heading: "Precompute, don't recompute",
-      body: "Because the corpus is static, I built the frequency tables, root/word indexes and thematic groupings once as a processing step and stored the derived data in MongoDB, rather than analysing text on every request.",
+      heading: "Anchor everything to the verse",
+      body: "Modelled the content by surah and verse so a note or an audio position points at an exact place in the text. That keeps a person's notes stable even as the interface around them changes.",
     },
     {
-      heading: "Typed Next.js front end over a thin API",
-      body: "A Next.js/TypeScript UI queries a small Node API for slices of the precomputed data. The client stays fast because it fetches results, not raw text to crunch.",
+      heading: "Keep the reading surface fast",
+      body: "Built the reader in Next.js and load audio on demand rather than up front, so opening a surah stays quick and the heavy recitation files only download when someone presses play.",
     },
     {
-      heading: "Search shaped around the questions asked",
-      body: "Indexed the data around the actual queries (by word, by root, by theme) so lookups hit an index instead of scanning documents.",
+      heading: "Private by default",
+      body: "Put the whole workspace behind authentication, with each person's notes and reading progress stored against their account so they pick up where they left off on any device.",
     },
   ],
   architecture: {
     caption:
-      "A one-time processing step turns the raw corpus into indexed, aggregated documents in MongoDB. The Next.js UI reads those precomputed slices through a thin Node API, with no live text-crunching on the request path.",
+      "A login-gated Next.js reader talks to a Node API for a user's notes and reading progress in MongoDB, and streams audio recitations on demand.",
     nodes: [
-      { id: "corpus", label: "Raw corpus", kind: "external" },
-      { id: "proc", label: "Processing step", kind: "service" },
-      { id: "mongo", label: "MongoDB (indexed)", kind: "datastore" },
-      { id: "api", label: "Node API", kind: "service" },
-      { id: "ui", label: "Next.js UI", kind: "client" },
+      { id: "ui", label: "Next.js reader", kind: "client" },
+      { id: "api", label: "Node API (auth)", kind: "service" },
+      { id: "mongo", label: "MongoDB (users, notes)", kind: "datastore" },
+      { id: "audio", label: "Audio recitations", kind: "external" },
     ],
     edges: [
-      { from: "corpus", to: "proc", label: "once" },
-      { from: "proc", to: "mongo", label: "aggregates + indexes" },
-      { from: "ui", to: "api", label: "query slices" },
-      { from: "api", to: "mongo", label: "indexed reads" },
+      { from: "ui", to: "api", label: "signed-in requests" },
+      { from: "api", to: "mongo", label: "notes · progress" },
+      { from: "ui", to: "audio", label: "stream on play" },
     ],
   },
   outcome: [
-    "Analysis that would be slow to compute live returns instantly, because it's read from precomputed indexes. TODO: add a real search-latency number.",
-    "Runs cheaply with zero ops on Vercel: the static-corpus design means no heavy compute on the hot path.",
-    "Shipped and publicly usable end to end, from data processing to UI.",
+    "Brought reading, private notes and audio recitation into one place, instead of juggling a reader, a notes app and a separate player.",
+    "Notes and reading progress persist per account, so a person's study carries across sessions and devices.",
+    "Audio loads on demand, so the reader stays quick even though the recitation files are large.",
   ],
   retro:
-    "The processing step was a script I ran by hand. That's fine for a corpus that never changes, but I'd make it a reproducible, version-pinned pipeline so a change to the analysis is one command and the derived data is auditable. I'd also add a small evaluation set for the thematic grouping so I could measure whether a change actually improved it, instead of eyeballing.",
+    "I'd give the notes some structure instead of leaving them free-form: tags, or references between passages, so a user can find their own notes again once there are a lot of them. I'd also make the audio more forgiving on poor connections, with clearer loading and less chance of dropping out mid-recitation.",
   order: 3,
 }

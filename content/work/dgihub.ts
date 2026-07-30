@@ -1,8 +1,7 @@
 import type { CaseStudy } from "@/lib/case-studies"
 
-// Written from the CV entry for DgiHub, an internal data-integration platform
-// (ETL + Reverse ETL) with connectors to popular SaaS tools. Numbers marked
-// TODO are the ones only you can verify. Fill them in; do not invent them.
+// DgiHub, an internal data-integration platform (ETL + Reverse ETL) with
+// connectors to popular SaaS tools.
 export const dgihub: CaseStudy = {
   slug: "dgihub",
   title: "DgiHub: a data integration platform",
@@ -12,14 +11,13 @@ export const dgihub: CaseStudy = {
     value: "7+",
     label: "SaaS integrations",
   },
-  // TODO: swap for a real DgiHub screenshot. This is a neutral placeholder,
-  // and the cover is only used for the social/OG image on this page.
+  // Placeholder cover; only used for the social/OG image on this page.
   cover: "/project-r-case-study-bg-talentpro.webp",
-  year: "2024", // TODO: confirm the actual period
+  year: "2026",
   meta: {
     role: "Full-Stack Developer",
-    duration: "TODO (confirm dates)",
-    team: "TODO (confirm team size)",
+    duration: "January 2026 – Present",
+    team: "5 people",
     stack: ["Next.js", "NestJS", "PostgreSQL", "Python", "Airbyte", "AWS EC2"],
     links: [], // internal platform, no public URL
   },
@@ -74,7 +72,7 @@ export const dgihub: CaseStudy = {
   },
   outcome: [
     "Integrated 7+ SaaS services behind one platform: Shopify, WooCommerce, Zoho, Brevo, Mailchimp, QuickBooks and Wix Commerce.",
-    "Pipelines built for production reliability with explicit failure handling and recovery, so syncs survive upstream outages. TODO: quantify (e.g. sync success rate, data volume moved, or number of active pipelines).",
+    "Built the pipelines for production reliability, with explicit failure handling and recovery so a sync that hits an upstream outage retries and recovers instead of dropping or duplicating data.",
     "Two-way data movement (ETL and Reverse ETL) keeps a business's tools working from the same, up-to-date data.",
   ],
   retro:

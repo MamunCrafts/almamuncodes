@@ -23,7 +23,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
         </Link>
 
         <header className="mt-8 max-w-3xl">
-          <p className="label">Case study · {study.year}</p>
+          <p className="label">Case study{study.year ? ` · ${study.year}` : ""}</p>
           <h1 className="mt-4 text-display-md">{study.title}</h1>
           <p className="mt-5 text-lg leading-relaxed text-muted">{study.teaser}</p>
         </header>
@@ -32,16 +32,20 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
           {/* Sticky sidebar (collapses above content on mobile) */}
           <aside className="lg:col-span-4 lg:order-2">
             <dl className="rounded-[--radius] border border-line bg-surface/60 p-6 font-mono text-sm lg:sticky lg:top-28">
-              {[
-                ["Role", study.meta.role],
-                ["Duration", study.meta.duration],
-                ["Team", study.meta.team],
-              ].map(([k, v]) => (
-                <div key={k} className="border-b border-line py-3 first:pt-0">
-                  <dt className="label mb-1.5">{k}</dt>
-                  <dd className="text-ink">{v}</dd>
-                </div>
-              ))}
+              {(
+                [
+                  ["Role", study.meta.role],
+                  ["Duration", study.meta.duration],
+                  ["Team", study.meta.team],
+                ] as [string, string | undefined][]
+              )
+                .filter(([, v]) => Boolean(v))
+                .map(([k, v]) => (
+                  <div key={k} className="border-b border-line py-3 first:pt-0">
+                    <dt className="label mb-1.5">{k}</dt>
+                    <dd className="text-ink">{v}</dd>
+                  </div>
+                ))}
               <div className="py-3">
                 <dt className="label mb-2">Stack</dt>
                 <dd className="flex flex-wrap gap-1.5">

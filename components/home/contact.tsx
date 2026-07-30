@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Github, Linkedin, Calendar } from "lucide-react"
+import { Github, Linkedin } from "lucide-react"
 import { site } from "@/config/site"
 import { Container, CTA } from "@/components/primitives/ui"
 import { Reveal } from "@/components/primitives/reveal"
@@ -44,16 +44,9 @@ export function Contact() {
 
             {/* Secondary actions */}
             <div className="mt-5 flex flex-wrap items-center gap-3">
-              {site.bookingUrl ? (
-                <CTA href={site.bookingUrl} variant="ghost" external>
-                  <Calendar className="h-4 w-4" /> Book a call
-                </CTA>
-              ) : (
-                // TODO: set site.bookingUrl (Cal.com / Calendly) to enable self-scheduling.
-                <CTA href={site.resumeUrl} variant="ghost" external>
-                  Download résumé
-                </CTA>
-              )}
+              <CTA href={site.resumeUrl} variant="ghost" external>
+                Download résumé
+              </CTA>
               <Link
                 href={site.socials.linkedin}
                 target="_blank"
