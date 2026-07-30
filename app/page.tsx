@@ -1,34 +1,27 @@
-import Header from "@/components/header"
-import Hero from "@/components/hero"
-import About from "@/components/about"
-import Skills from "@/components/skills"
-import Services from "@/components/services"
-import Projects from "@/components/projects"
-// import Testimonials from "@/components/testimonials"
-import Stats from "@/components/stats"
-import Contact from "@/components/contact"
-import Footer from "@/components/footer"
-import { ParticleBackground } from "@/components/particle-background"
-import Experience from "@/components/experiencev2"
+import { SiteHeader } from "@/components/layout/site-header"
+import { SiteFooter } from "@/components/layout/site-footer"
+import { Hero } from "@/components/home/hero"
+import { ProofStrip } from "@/components/home/proof-strip"
+import { SelectedWork } from "@/components/home/selected-work"
+import { Capabilities } from "@/components/home/capabilities"
+import { Skills } from "@/components/home/skills"
+import { Credentials } from "@/components/home/credentials"
+import { Contact } from "@/components/home/contact"
 
-export default function Portfolio() {
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      <ParticleBackground />
-      <Header />
+    <>
+      <SiteHeader />
       <main>
         <Hero />
-        <Stats />
-        <About />
-        <Experience />
-        <Projects />
+        <ProofStrip />
+        <SelectedWork />
+        <Capabilities />
         <Skills />
-        {/* <Services /> */}
-       
-        {/* <Testimonials /> */}
+        <Credentials />
         <Contact />
       </main>
-      <Footer />
-    </div>
+      <SiteFooter />
+    </>
   )
 }
