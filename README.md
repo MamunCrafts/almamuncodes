@@ -41,7 +41,13 @@ yarn typecheck     # tsc --noEmit
 
 ### Environment variables (optional)
 
-Analytics is off unless a key is present. To enable PostHog, add `.env.local`:
+Analytics is off unless a key is present. To enable PostHog, copy `.env.example` to `.env.local`:
+
+```bash
+cp .env.example .env.local
+```
+
+Then set your PostHog key:
 
 ```bash
 NEXT_PUBLIC_POSTHOG_KEY=phc_xxx
