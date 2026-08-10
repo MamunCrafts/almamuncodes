@@ -34,9 +34,11 @@ export const site = {
   availability: "Available for remote contract or full-time work",
   email: "md.almamun.mim.dev@gmail.com",
   phone: "+880 1770 540432",
-  // TODO: replace with a hosted, ATS-friendly PDF at /resume.pdf in /public.
-  resumeUrl:
-    "https://drive.google.com/file/d/1TvJHUHzDcKWtNC1ZGU1UIlLtzJ-hL9D3/view?usp=sharing",
+  // Self-hosted, ATS-friendly PDFs in /public. `resumeUrl` is the conventional
+  // reverse-chronological CV (what recruiters and ATS expect); `resumeContractUrl`
+  // is the problem-first version for client and agency conversations.
+  resumeUrl: "/resume.pdf",
+  resumeContractUrl: "/resume-contract.pdf",
   // TODO: add a Cal.com / Calendly link so recruiters can self-schedule across timezones.
   bookingUrl: "",
   url: "https://almamun.codes",
