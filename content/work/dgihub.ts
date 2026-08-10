@@ -1,10 +1,12 @@
 import type { CaseStudy } from "@/lib/case-studies"
 
-// DgiHub, an internal data-integration platform (ETL + Reverse ETL) with
+// ConversaAI, an internal data-integration platform (ETL + Reverse ETL) with
 // connectors to popular SaaS tools.
+// NOTE: the slug stays "dgihub" (the project's former name) so the published
+// URL /work/dgihub keeps working. Display name only was changed.
 export const dgihub: CaseStudy = {
   slug: "dgihub",
-  title: "DgiHub: a data integration platform",
+  title: "ConversaAI: a data integration platform",
   teaser:
     "An internal ETL and Reverse-ETL platform that moves data between a business's SaaS tools, with connectors, pipelines, and production-grade failure recovery.",
   metric: {
@@ -22,7 +24,7 @@ export const dgihub: CaseStudy = {
     links: [], // internal platform, no public URL
   },
   context:
-    "DgiHub is an internal data-integration platform. Businesses run their operations across many SaaS tools (storefronts, CRMs, accounting, email marketing), and their data ends up siloed in each one. DgiHub's job is to move that data where it's needed: pull it in from those tools (ETL) and push modeled data back out to them (Reverse ETL), so every system is working from the same picture.",
+    "ConversaAI is an internal data-integration platform. Businesses run their operations across many SaaS tools (storefronts, CRMs, accounting, email marketing), and their data ends up siloed in each one. ConversaAI's job is to move that data where it's needed: pull it in from those tools (ETL) and push modeled data back out to them (Reverse ETL), so every system is working from the same picture.",
   problem:
     "Every third-party service integrates differently: its own auth, rate limits, pagination and data shapes. Stitching them together by hand is brittle, and because the syncs run continuously in production, a single upstream hiccup can't be allowed to corrupt data or wedge the whole pipeline. The platform needed reliable, recoverable data movement in both directions, not a pile of one-off scripts.",
   constraints: [

@@ -17,21 +17,33 @@ export const metadata: Metadata = {
 const timeline: TimelineItem[] = [
   {
     period: "2026–Present",
-    title: "Senior Software Developer · Fanfare (Simura Group)",
+    title: "Senior Software Developer · Talent Pro",
     detail:
-      "Lead a small dev team, architect scalable systems, review pull requests and enforce coding standards, and own features end to end within an Agile workflow.",
+      "Five engineers report to me on a team of 20. I own architecture decisions on new services, run code reviews, and mentor on testing and API design. Rebuilt chat in-house on WebSockets after Firestore's per-operation billing made cost scale with engagement.",
   },
   {
-    period: "2022–2025",
-    title: "Software Developer · Fanfare (Simura Group)",
+    period: "2023–2026",
+    title: "Software Developer · Talent Pro",
     detail:
-      "Built full-stack features with JavaScript and Node.js, created reusable UI components, and optimised MongoDB/MySQL queries for a scalable, maintainable codebase.",
+      "Owned the GraphQL API and data layer behind Fanfare: schema, feed, notifications, Redis caching, and the transcoding pipeline at ~1,000 video uploads a day. Diagnosed endpoints exceeding five seconds with explain() and fixed the collection scans behind them.",
+  },
+  {
+    period: "2023",
+    title: "Junior Software Developer · Talent Pro",
+    detail:
+      "Shipped front-end features and built a library of responsive, reusable components. Wrote GraphQL APIs that simplified data fetching for the rest of the team, and worked with the database team on query optimisation.",
+  },
+  {
+    period: "2022–2023",
+    title: "Software Developer, Intern · Talent Pro",
+    detail:
+      "Internship that converted into a full-time role. Shipped React and Next.js features, wrote supporting Node.js endpoints, and picked up the team's code review, testing and Git workflow from the first week.",
   },
   {
     period: "2017–2022",
     title: "B.Sc. in Information & Communication Engineering · University of Rajshahi",
     detail:
-      "Led the ICE department's competitive-programming team. Ranked 5th in Bangladesh (272nd globally) at IEEE Xtreme 14.0, and solved 600+ problems on Codeforces.",
+      "Led the ICE department's competitive-programming team. Ranked 5th in Bangladesh at IEEE Xtreme 14.0, and solved 600+ problems on Codeforces.",
   },
 ]
 
@@ -65,9 +77,9 @@ export default function AboutPage() {
                     APIs, and the Postgres/Mongo/Redis layers behind them. I gravitate toward the
                     parts other people find fiddly: the N+1 query hiding in a feed, the cache that's
                     lying about its freshness, the schema that'll be painful to change next year.
-                    Along the way I doubled API throughput on Fanfare's platform and was recognised
-                    with a Tech Genius award at Talent Pro (a sister company of Fanfare under the
-                    Simura Group) for collaboration and innovation.
+                    Along the way I doubled API throughput on Fanfare, the social commerce product I
+                    work on at Talent Pro, and was recognised with a Tech Genius award for
+                    collaboration and innovation.
                   </p>
                   <p>
                     I work well async and write things down, which is what makes remote across time

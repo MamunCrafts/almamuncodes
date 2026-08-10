@@ -42,7 +42,7 @@ export const site = {
   url: "https://almamun.codes",
   socials: {
     github: "https://github.com/mamuncrafts",
-    linkedin: "https://www.linkedin.com/in/almamunmim1611177146/",
+    linkedin: "https://www.linkedin.com/in/mamuncrafts/",
     twitter: "https://twitter.com/soft_eng_mamun",
   },
 } as const
@@ -114,7 +114,7 @@ export const skillGroups: SkillGroup[] = [
 ]
 
 export const highlights = [
-  { name: "IEEE Xtreme 14.0", detail: "Bangladesh Rank 5 · Global Rank 272", year: "2020" },
+  { name: "IEEE Xtreme 14.0", detail: "Bangladesh Rank 5 · Team CrazyCodersRu", year: "2020" },
   { name: "Codeforces", detail: "600+ problems solved", year: "2018–2022" },
 ]
 
