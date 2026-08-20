@@ -19,7 +19,7 @@ export function ArchitectureDiagram({ architecture }: { architecture: Arch }) {
   const nodeLabel = (id: string) => architecture.nodes.find((n) => n.id === id)?.label ?? id
 
   return (
-    <figure className="not-prose rounded-[--radius] border border-line bg-surface/50 p-6 lg:p-8">
+    <figure className="not-prose rounded-[--radius] border border-line bg-surface p-6 lg:p-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-stretch">
         {lanes.map((lane, li) => (
           <div key={lane.kind} className="flex flex-1 items-stretch gap-4">
@@ -31,7 +31,7 @@ export function ArchitectureDiagram({ architecture }: { architecture: Arch }) {
                     key={n.id}
                     className={`rounded-[--radius] border px-3 py-2.5 font-mono text-sm ${
                       n.kind === "service"
-                        ? "border-accent/50 bg-accent-weak/40 text-ink"
+                        ? "border-muted bg-raised text-ink"
                         : "border-line bg-bg text-muted"
                     }`}
                   >
@@ -54,9 +54,9 @@ export function ArchitectureDiagram({ architecture }: { architecture: Arch }) {
         {architecture.edges.map((e, i) => (
           <li key={i} className="flex items-baseline gap-2">
             <span className="text-ink">{nodeLabel(e.from)}</span>
-            <ChevronRight className="h-3 w-3 shrink-0 translate-y-0.5 text-accent" />
+            <ChevronRight className="h-3 w-3 shrink-0 translate-y-0.5 text-accent-text" />
             <span className="text-ink">{nodeLabel(e.to)}</span>
-            {e.label && <span className="text-faint">· {e.label}</span>}
+            {e.label && <span className="text-muted">· {e.label}</span>}
           </li>
         ))}
       </ul>

@@ -1,8 +1,8 @@
-# Md. Al Mamun Mim — Portfolio
+# Md. Al Mamun Mim - Portfolio
 
 Personal portfolio for a senior full-stack developer targeting remote roles in the UK, US and Australia. It is a fast, static, multi-page site: a home page, a case-study index, individual case studies, and an about page.
 
-The whole site is **content-driven from a few typed files** — you rarely touch components to update it.
+The whole site is **content-driven from a few typed files** - you rarely touch components to update it.
 
 - **Live:** https://almamun.codes
 - **Design:** warm technical-editorial, dark theme, one tangerine accent (MongoDB-green used only on the certification card)
@@ -19,11 +19,11 @@ The whole site is **content-driven from a few typed files** — you rarely touch
 | Styling | Tailwind CSS v3 + CSS custom properties |
 | Icons | lucide-react |
 | Content validation | Zod |
-| Fonts | `next/font` — Fraunces (display), Hanken Grotesk (body), JetBrains Mono (labels) |
+| Fonts | `next/font` - Fraunces (display), Hanken Grotesk (body), JetBrains Mono (labels) |
 | Analytics | PostHog (optional, only runs if a key is set) |
 | Hosting | Vercel (zero-config, fully static) |
 
-No CMS, no database. Case studies are typed TypeScript modules validated by Zod. Contact is `mailto:` — there is no backend form.
+No CMS, no database. Case studies are typed TypeScript modules validated by Zod. Contact is `mailto:` - there is no backend form.
 
 **Requirements:** Node.js `>= 20.9` (Next 16 minimum) and Yarn.
 
@@ -98,7 +98,7 @@ components/
 
 **Almost everything lives in `config/site.ts`.** Change your name, title, email, phone,
 socials, skills, proof stats, capabilities, credentials, education, or highlights there
-and it propagates across the whole site — including the header, footer, generated social
+and it propagates across the whole site - including the header, footer, generated social
 image, and structured data.
 
 ---
@@ -136,7 +136,7 @@ Case studies are typed data, validated at build time by Zod. To add one:
        edges: [{ from: "ui", to: "api", label: "requests" }],
      },
      outcome: ["Result with a number where possible."],
-     retro: "What you would change — the senior differentiator.",
+     retro: "What you would change - the senior differentiator.",
      order: 4, // lower shows first; home shows the top 3
    }
    ```
@@ -152,7 +152,7 @@ The `/work/<slug>` page, the `/work` index, the home "Selected work" list (top 3
 and the sitemap all update automatically. If a field is wrong or missing, the Zod parse
 fails the build with a clear message.
 
-> The architecture diagram renders from `nodes`/`edges` as a labeled flow — you don't draw SVG by hand.
+> The architecture diagram renders from `nodes`/`edges` as a labeled flow - you don't draw SVG by hand.
 
 ---
 
@@ -162,7 +162,7 @@ fails the build with a clear message.
   (`--bg`, `--ink`, `--accent`, etc.). Everything reads from these.
 - **Fonts:** swap the `next/font` imports in `app/layout.tsx`.
 - **Favicon / social image:** edit `app/icon.tsx`, `app/apple-icon.tsx`, and
-  `app/opengraph-image.tsx`. They are generated from code and rebuild automatically —
+  `app/opengraph-image.tsx`. They are generated from code and rebuild automatically -
   no image files to maintain.
 - **Motion:** scroll reveals use `components/primitives/reveal.tsx` and respect
   `prefers-reduced-motion`.

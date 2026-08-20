@@ -1,7 +1,6 @@
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
 import { Hero } from "@/components/home/hero"
-import { ProofStrip } from "@/components/home/proof-strip"
 import { SelectedWork } from "@/components/home/selected-work"
 import { Capabilities } from "@/components/home/capabilities"
 import { Skills } from "@/components/home/skills"
@@ -14,7 +13,6 @@ export default function HomePage() {
       <SiteHeader />
       <main>
         <Hero />
-        <ProofStrip />
         <SelectedWork />
         <Capabilities />
         <Skills />

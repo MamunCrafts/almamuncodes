@@ -2,22 +2,549 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Warm technical-editorial, dark by default ─────────────────────────────
-   Warm near-black canvas, bone text, one disciplined tangerine accent.
-   Engineering documentation crossed with a design magazine.            */
-:root {
-  --bg: #100f0d;
-  --surface: #161411;
-  --raised: #1d1a15;
-  --ink: #ece6d9;
-  --muted: #9c9484;
-  --faint: #6a6355;
-  --line: #2a2620;
-  --accent: #ff6a2b;
-  --accent-ink: #140b06; /* text on top of accent */
-  --accent-weak: #3a2418;
-  --radius: 0.5rem;
+/* ══ THEME SYSTEM ═════════════════════════════════════════════════════════════
+   19 tokens, 8 palettes, 2 modes. Colour VALUES live here and nowhere else;
+   config/palettes.ts holds only identity and copy.
+
+   Five palettes are their own hue stories (Aurora, Ember, Lagoon, Orchid,
+   Slate). The last three are ONE family whose roles rotate - terracotta, teal
+   and green each lead a palette and become the data pair in the other two:
+
+     Terracotta  clay ground   accent burnt orange   slow rust   fast teal
+     Verdigris   teal ground   accent teal           slow clay   fast green
+     Olive       green ground  accent leaf green     slow clay   fast teal
+
+   ── WHY THERE ARE TWO ACCENTS AND TWO DATA COLOURS ──────────────────────────
+   --accent       the FILL (buttons, dots, rules). Carries --accent-ink at
+                  >= 4.5:1 and stays >= 3:1 on the ground. Large areas only.
+   --accent-text  accent used as TEXT or icons ON the ground. Needs the full
+                  4.5:1 vs --bg, so in dark mode it sits lighter than the fill.
+   --slow-fill /  the BARS. Large areas, 3:1 is the bar.
+   --fast-fill
+   --slow /       the READOUTS beside the bars. Text, so 4.5:1.
+   --fast
+
+   A single mid-tone value cannot serve both roles: at ~0.22 relative luminance
+   an accent reaches only ~3.9:1 against white AND against black - the classic
+   mid-tone button trap. Collapsing these tokens back into one produces either
+   illegible button labels, or bars forced so pale they read pink and cyan
+   instead of rust and teal. Both were observed while building this.
+
+   ── VERIFIED, NOT EYEBALLED ─────────────────────────────────────────────────
+   Generator: scratchpad/gen_palettes.py. Checks that ship green:
+
+     ink/bg >= 12    muted/bg >= 4.5   faint/bg >= 3   slow,fast/bg >= 4.5
+     accent(fill)/bg >= 3   accent-ink/fill >= 4.5   accent-text/bg >= 4.5
+     slow-fill,fast-fill/bg >= 3
+     surface/bg >= 1.30   raised/surface >= 1.22   line/raised >= 1.18
+     chroma(bg) >= 10/255 spread   (the neutrals are NOT grey)
+     hue(accent,fast) >= 55deg   hue(slow,fast) >= 80deg
+     hue(accent,slow) >= 30deg OR contrast(accent,slow) >= 1.6
+
+   Each exists because its absence was a real bug:
+   * surface/bg - the first system sat at 1.07:1, a 0.4% luminance step. Cards
+     were not objects. Ratios compress hard near black, so this ramp walks
+     lightness until the RATIO is met, never by a fixed lightness delta.
+   * chroma(bg) - the first neutrals had a 5-9/255 spread, i.e. dead grey.
+   * hue(accent,fast) - caught Lagoon at 34deg and Slate at 40deg AFTER they had
+     shipped: the accent fill and the "after" bar read as the same pigment.
+     Ground-contrast checks cannot see this; both pass the ground independently.
+
+   Terracotta carries an EXPLICIT waiver on hue(accent,slow): burnt orange and
+   rust sit 20deg apart. The rule stays strict and the exception is declared per
+   palette (`warm_collision`), so it shows up in review rather than silently
+   weakening all eight.
+
+   --tint / --glow-1 / --glow-2 are PRE-MIXED solid hex, deliberately. Tailwind
+   cannot apply an opacity modifier to a var() colour: `bg-surface/50` compiles
+   to NOTHING and the element ends up with no background at all. That bug
+   shipped here once already, in four separate cards. Need a wash? Add a token.
+
+   ── THE SPECIFICITY TRAP - read before "simplifying" this ───────────────────
+   Selectors are deliberately NOT anchored to :root beyond the default block:
+   the palette picker previews a swatch by nesting an element carrying
+   data-palette + data-mode, and relies on the variables re-scoping locally. So
+   every block must be an attribute selector that works at any depth.
+
+   `[data-mode="light"]` and `[data-palette="ember"]` are BOTH single attribute
+   selectors - equal specificity (0,1,0). A bare `[data-mode="light"]` block
+   would be settled by source order alone, and since the dark blocks must come
+   first (they are the no-JS/SSR default), dark would WIN: light mode silently
+   stays dark on every palette except the default. So each light block carries
+   BOTH attributes, at (0,2,0). Eight palettes, eight light blocks. Do NOT
+   collapse them into one bare `[data-mode="light"]` rule - that is the bug.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* ── DARK ─────────────────────────────────────────────────────────────────── */
+
+/* Aurora, dark - Indigo night · violet and cyan.
+   :root included so the site is dark before any script runs (SSR / no-JS). */
+:root,
+[data-palette="aurora"] {
+  --bg: #0c0d18;
+  --surface: #22263f;
+  --raised: #303554;
+  --line: #3a4064;
+
+  --ink: #eff0f6;
+  --muted: #aeb2cb;
+  --faint: #717698;
+
+  --accent: #8a5cf5;
+  --accent-ink: #0a0c1a;
+  --accent-text: #8d61f5;
+  --accent-2: #4fd8ee;
+  --accent-weak: #2d2c51;
+
+  --slow-fill: #c33613;
+  --fast-fill: #13c383;
+  --slow: #ee7658;
+  --fast: #58eeb7;
+
+  --tint: #2d2c51;
+  --glow-1: #281f49;
+  --glow-2: #152936;
+
+  --radius: 0.625rem;
 }
+
+/* Ember, dark - Warm dusk · amber and rose. */
+[data-palette="ember"] {
+  --bg: #18100b;
+  --surface: #39271d;
+  --raised: #4c352a;
+  --line: #5b4133;
+
+  --ink: #f6f1ef;
+  --muted: #cbb8ae;
+  --faint: #987e71;
+
+  --accent: #f5ad5c;
+  --accent-ink: #1a0f0a;
+  --accent-text: #f5ad5c;
+  --accent-2: #ee4f79;
+  --accent-weak: #4c3423;
+
+  --slow-fill: #c32513;
+  --fast-fill: #13c3a0;
+  --slow: #ee6758;
+  --fast: #58eed0;
+
+  --tint: #4c3423;
+  --glow-1: #49331d;
+  --glow-2: #36191a;
+
+  --radius: 0.625rem;
+}
+
+/* Lagoon, dark - Deep water · cyan and green. */
+[data-palette="lagoon"] {
+  --bg: #0c1518;
+  --surface: #1d2e34;
+  --raised: #2a3f46;
+  --line: #344d55;
+
+  --ink: #eff4f6;
+  --muted: #aec4cb;
+  --faint: #718e98;
+
+  --accent: #5ceaf5;
+  --accent-ink: #0a161a;
+  --accent-text: #5ceaf5;
+  --accent-2: #99ee4f;
+  --accent-weak: #234147;
+
+  --slow-fill: #c34813;
+  --fast-fill: #13c313;
+  --slow: #ee8558;
+  --fast: #58ee58;
+
+  --tint: #234147;
+  --glow-1: #1e4449;
+  --glow-2: #203320;
+
+  --radius: 0.625rem;
+}
+
+/* Orchid, dark - Plum dark · magenta and violet. */
+[data-palette="orchid"] {
+  --bg: #150d17;
+  --surface: #342339;
+  --raised: #44304a;
+  --line: #523b59;
+
+  --ink: #f4eff6;
+  --muted: #c4aecb;
+  --faint: #8f7198;
+
+  --accent: #f55ccc;
+  --accent-ink: #160a1a;
+  --accent-text: #f55ccc;
+  --accent-2: #9561ef;
+  --accent-weak: #472948;
+
+  --slow-fill: #c32b13;
+  --fast-fill: #13c394;
+  --slow: #ee6c58;
+  --fast: #58eec6;
+
+  --tint: #472948;
+  --glow-1: #461e3f;
+  --glow-2: #271935;
+
+  --radius: 0.625rem;
+}
+
+/* Slate, dark - Quiet cool · one blue. */
+[data-palette="slate"] {
+  --bg: #0c1117;
+  --surface: #202a37;
+  --raised: #2d3948;
+  --line: #384557;
+
+  --ink: #eff2f6;
+  --muted: #aebbcb;
+  --faint: #718298;
+
+  --accent: #5ca3f5;
+  --accent-ink: #0a111a;
+  --accent-text: #5ca3f5;
+  --accent-2: #4fc3ee;
+  --accent-weak: #26364a;
+
+  --slow-fill: #c33c13;
+  --fast-fill: #13c37a;
+  --slow: #ee7b58;
+  --fast: #58eeb0;
+
+  --tint: #26364a;
+  --glow-1: #1e3148;
+  --glow-2: #152a35;
+
+  --radius: 0.625rem;
+}
+
+/* Terracotta, dark - Warm clay · burnt orange and teal. */
+[data-palette="terracotta"] {
+  --bg: #1f150f;
+  --surface: #3c2a20;
+  --raised: #4e392d;
+  --line: #5d4537;
+
+  --ink: #f6f1ef;
+  --muted: #cbb9ae;
+  --faint: #987f71;
+
+  --accent: #b35a16;
+  --accent-ink: #fbfaf9;
+  --accent-text: #ec9f65;
+  --accent-2: #eebe4f;
+  --accent-weak: #4e3627;
+
+  --slow-fill: #b6392b;
+  --fast-fill: #29aea9;
+  --slow: #dc766a;
+  --fast: #6adcd8;
+
+  --tint: #4e3627;
+  --glow-1: #4c3322;
+  --glow-2: #3c2d18;
+
+  --radius: 0.625rem;
+}
+
+/* Verdigris, dark - Oxidised copper · teal and green. */
+[data-palette="verdigris"] {
+  --bg: #101c1e;
+  --surface: #203337;
+  --raised: #2b4145;
+  --line: #344c51;
+
+  --ink: #eff5f6;
+  --muted: #aec6cb;
+  --faint: #719298;
+
+  --accent: #197f83;
+  --accent-ink: #f9fbfb;
+  --accent-text: #6ddfe3;
+  --accent-2: #4fb3ee;
+  --accent-weak: #284448;
+
+  --slow-fill: #ae5129;
+  --fast-fill: #43ae29;
+  --slow: #dc8c6a;
+  --fast: #81dc6a;
+
+  --tint: #284448;
+  --glow-1: #244749;
+  --glow-2: #19313b;
+
+  --radius: 0.625rem;
+}
+
+/* Olive, dark - Warm green · leaf and terracotta. */
+[data-palette="olive"] {
+  --bg: #151e10;
+  --surface: #283720;
+  --raised: #34452b;
+  --line: #3d5134;
+
+  --ink: #f1f6ef;
+  --muted: #b8cbae;
+  --faint: #7e9871;
+
+  --accent: #338319;
+  --accent-ink: #fafbf9;
+  --accent-text: #8be36d;
+  --accent-2: #c3ee4f;
+  --accent-weak: #324828;
+
+  --slow-fill: #ae4c29;
+  --fast-fill: #29aea5;
+  --slow: #dc896a;
+  --fast: #6adcd5;
+
+  --tint: #324828;
+  --glow-1: #2f4924;
+  --glow-2: #2d3b19;
+
+  --radius: 0.625rem;
+}
+
+/* ── LIGHT - two attributes each. See the specificity note above. ────────── */
+
+/* Aurora, light. */
+[data-mode="light"][data-palette="aurora"] {
+  --bg: #eef0f9;
+  --surface: #ccd0ea;
+  --raised: #b5bbde;
+  --line: #a3a9d2;
+
+  --ink: #131525;
+  --muted: #4a5078;
+  --faint: #777c9c;
+
+  --accent: #4d19c8;
+  --accent-ink: #f9f9fb;
+  --accent-text: #4d19c8;
+  --accent-2: #157584;
+  --accent-weak: #bfbee7;
+
+  --slow-fill: #cc411e;
+  --fast-fill: #179b6b;
+  --slow: #b1391b;
+  --fast: #127852;
+
+  --tint: #bfbee7;
+  --glow-1: #d7d2f2;
+  --glow-2: #dae5ee;
+
+  --radius: 0.625rem;
+}
+
+/* Ember, light. */
+[data-mode="light"][data-palette="ember"] {
+  --bg: #f9f2ee;
+  --surface: #e7d0c5;
+  --raised: #d9baab;
+  --line: #cea997;
+
+  --ink: #251913;
+  --muted: #78594a;
+  --faint: #9c8377;
+
+  --accent: #c87619;
+  --accent-ink: #1a0f0a;
+  --accent-text: #9f5e14;
+  --accent-2: #af1d44;
+  --accent-weak: #e0c5b3;
+
+  --slow-fill: #cc301e;
+  --fast-fill: #179b81;
+  --slow: #b12a1b;
+  --fast: #137c67;
+
+  --tint: #e0c5b3;
+  --glow-1: #ecddcf;
+  --glow-2: #f2dfdf;
+
+  --radius: 0.625rem;
+}
+
+/* Lagoon, light. */
+[data-mode="light"][data-palette="lagoon"] {
+  --bg: #eef6f9;
+  --surface: #c1dce6;
+  --raised: #a4c8d6;
+  --line: #90b7c6;
+
+  --ink: #132025;
+  --muted: #4a6c78;
+  --faint: #74909a;
+
+  --accent: #149ca6;
+  --accent-ink: #0a161a;
+  --accent-text: #10787f;
+  --accent-2: #447b14;
+  --accent-weak: #afd2dc;
+
+  --slow-fill: #cc531e;
+  --fast-fill: #19a419;
+  --slow: #b1481b;
+  --fast: #137c13;
+
+  --tint: #afd2dc;
+  --glow-1: #cfe4e8;
+  --glow-2: #dfebe4;
+
+  --radius: 0.625rem;
+}
+
+/* Orchid, light. */
+[data-mode="light"][data-palette="orchid"] {
+  --bg: #f6eef9;
+  --surface: #e3ccea;
+  --raised: #d4b5de;
+  --line: #c2a4cc;
+
+  --ink: #211325;
+  --muted: #6d4a78;
+  --faint: #94779c;
+
+  --accent: #c81999;
+  --accent-ink: #faf9fb;
+  --accent-text: #c31896;
+  --accent-2: #521daf;
+  --accent-weak: #e0bae2;
+
+  --slow-fill: #cc361e;
+  --fast-fill: #179b78;
+  --slow: #b12f1b;
+  --fast: #12785d;
+
+  --tint: #e0bae2;
+  --glow-1: #efd0eb;
+  --glow-2: #e7dbf2;
+
+  --radius: 0.625rem;
+}
+
+/* Slate, light. */
+[data-mode="light"][data-palette="slate"] {
+  --bg: #eef3f9;
+  --surface: #c9d7e9;
+  --raised: #aec1db;
+  --line: #9cafc9;
+
+  --ink: #131b25;
+  --muted: #4a5e78;
+  --faint: #77879c;
+
+  --accent: #196ac8;
+  --accent-ink: #f9fafb;
+  --accent-text: #196ac8;
+  --accent-2: #187495;
+  --accent-weak: #b7cce6;
+
+  --slow-fill: #cc471e;
+  --fast-fill: #18a067;
+  --slow: #b13e1b;
+  --fast: #137c50;
+
+  --tint: #b7cce6;
+  --glow-1: #d0e0f2;
+  --glow-2: #dbe8f0;
+
+  --radius: 0.625rem;
+}
+
+/* Terracotta, light. */
+[data-mode="light"][data-palette="terracotta"] {
+  --bg: #f9f2ee;
+  --surface: #e7d2c5;
+  --raised: #d9bcab;
+  --line: #cba995;
+
+  --ink: #251a13;
+  --muted: #785b4a;
+  --faint: #9c8577;
+
+  --accent: #b35a16;
+  --accent-ink: #fbfaf9;
+  --accent-text: #a85515;
+  --accent-2: #886616;
+  --accent-weak: #e1c6b3;
+
+  --slow-fill: #cc301e;
+  --fast-fill: #179b97;
+  --slow: #b12a1b;
+  --fast: #127874;
+
+  --tint: #e1c6b3;
+  --glow-1: #eedcd0;
+  --glow-2: #efe5db;
+
+  --radius: 0.625rem;
+}
+
+/* Verdigris, light. */
+[data-mode="light"][data-palette="verdigris"] {
+  --bg: #eef7f9;
+  --surface: #bedee4;
+  --raised: #a0ccd4;
+  --line: #92bcc4;
+
+  --ink: #132225;
+  --muted: #4a7078;
+  --faint: #719298;
+
+  --accent: #108084;
+  --accent-ink: #f9fbfb;
+  --accent-text: #107b7f;
+  --accent-2: #1b74a7;
+  --accent-weak: #add4da;
+
+  --slow-fill: #cc531e;
+  --fast-fill: #33a018;
+  --slow: #b1481b;
+  --fast: #287c13;
+
+  --tint: #add4da;
+  --glow-1: #cfe6e8;
+  --glow-2: #dbebf2;
+
+  --radius: 0.625rem;
+}
+
+/* Olive, light. */
+[data-mode="light"][data-palette="olive"] {
+  --bg: #f2f9ee;
+  --surface: #c5e1b7;
+  --raised: #a9d095;
+  --line: #9abf88;
+
+  --ink: #192513;
+  --muted: #59784a;
+  --faint: #79946b;
+
+  --accent: #2d8410;
+  --accent-ink: #fafbf9;
+  --accent-text: #2c7f10;
+  --accent-2: #5c7613;
+  --accent-weak: #b6d7a6;
+
+  --slow-fill: #cc4d1e;
+  --fast-fill: #18a097;
+  --slow: #b1431b;
+  --fast: #137c75;
+
+  --tint: #b6d7a6;
+  --glow-1: #d6e8cf;
+  --glow-2: #e4edda;
+
+  --radius: 0.625rem;
+}
+
 
 @layer base {
   * {
@@ -30,8 +557,10 @@
   }
   body {
     background-color: var(--bg);
+    /* Running prose is INK. --muted is for metadata and captions only; setting
+       body copy in it was what made every page look washed out. */
     color: var(--ink);
-    font-feature-settings: "ss01";
+    font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -45,11 +574,63 @@
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display), Georgia, serif;
-    font-weight: 500;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  /* Tabular figures everywhere a number can change: trace readouts, metrics,
+     timelines. Digits must not shift width while a bar animates. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
   }
 }
 
 @layer components {
+  /* Ambient wash behind the hero: two soft radial stops from the brand pair.
+     The one deliberate flourish - used once per page, never repeated. */
+  .bg-aurora {
+    background-image:
+      radial-gradient(ellipse 80% 55% at 12% -10%, var(--glow-1) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 50% at 92% 0%, var(--glow-2) 0%, transparent 62%);
+  }
+
+  /* A card is an object: elevated surface, hairline, and a 1px top highlight
+     that catches the light. The elevation step is verified >= 1.30:1 vs --bg. */
+  .card {
+    position: relative;
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  /* Accent-tinted panel, for the one card that should feel highlighted. */
+  .card-tint {
+    background-color: var(--tint);
+  }
+
+
+  /* Explicit opt-in to the Bree Serif display voice. */
+  .font-bree {
+    font-family: var(--font-display), Georgia, serif;
+  }
+
+  /* The slant, reserved for a single emphasised phrase per page. Bree ships
+     upright only, so the browser synthesises it. */
+  .slant {
+    font-style: oblique 8deg;
+  }
+
   /* Monospace metadata label: the "documentation" voice. */
   .label {
     font-family: var(--font-mono), monospace;
@@ -60,28 +641,16 @@
     color: var(--muted);
   }
 
-  /* Fine background grid + subtle warm vignette for texture (not flat). */
-  .bg-grid {
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 72px 72px;
-    -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 20%, transparent 78%);
-    mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 20%, transparent 78%);
-  }
-
-  /* Grain overlay: subtle film noise, pointer-events off. */
-  .bg-noise::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.035;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Ruled ground: a single baseline grid, no vignette, no grain. On paper the
+     rule does the work the glow used to. */
+  .bg-ruled {
+    background-image: linear-gradient(var(--line) 1px, transparent 1px);
+    background-size: 100% 2rem;
+    opacity: 0.5;
   }
 
   .link-underline {
-    background-image: linear-gradient(var(--accent), var(--accent));
+    background-image: linear-gradient(var(--ink), var(--ink));
     background-size: 0% 1px;
     background-position: 0 100%;
     background-repeat: no-repeat;
@@ -105,6 +674,27 @@
   transform: none;
 }
 
+/* ── Theme swap easing ────────────────────────────────────────────────────────
+   Changing data-mode / data-palette repaints every token at once, which snaps
+   hard. A short transition on the ground and the ink smooths it.
+
+   Deliberately NOT `* { transition: ... }`: a universal rule would attach a
+   colour transition to every button, link and card on the site and fight their
+   own hover states (and cost a style recalc on every element). Only the
+   structural surfaces that actually carry --bg / --ink / --line are listed.  */
+body,
+header,
+footer,
+main,
+nav,
+section,
+article,
+aside,
+hr {
+  transition: background-color 220ms ease, border-color 220ms ease,
+    color 220ms ease;
+}
+
 ::-webkit-scrollbar {
   width: 11px;
   height: 11px;
@@ -124,11 +714,26 @@
   *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
+    /* Delay must go too: a staggered animation with backwards fill would
+       otherwise hold its 0% frame, leaving the trace bars empty forever. */
+    animation-delay: 0ms !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
   .reveal {
     opacity: 1;
     transform: none;
+  }
+  /* Theme swap must be instant, not merely fast. */
+  body,
+  header,
+  footer,
+  main,
+  nav,
+  section,
+  article,
+  aside,
+  hr {
+    transition: none !important;
   }
 }

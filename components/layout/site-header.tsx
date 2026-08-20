@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
+import { ModeToggle } from "@/components/theme/mode-toggle"
+import { PalettePicker } from "@/components/theme/palette-picker"
 import { nav, site } from "@/config/site"
 
 // Sections tracked for active-state highlighting on the home page.
@@ -57,29 +59,24 @@ export function SiteHeader() {
 
   const brand = (
     <Link href="/" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
-      <span className="flex h-7 w-7 items-center justify-center rounded-[7px] bg-accent font-display text-sm font-bold text-accent-ink">
+      <span className="flex h-7 w-7 items-center justify-center rounded-[calc(var(--radius)-3px)] bg-accent font-display text-sm text-accent-ink">
         M
       </span>
-      <span className="font-display text-base font-medium tracking-tight">{site.shortName}</span>
+      <span className="font-display text-base tracking-tight">{site.shortName}</span>
     </Link>
   )
 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled ? "border-b border-line bg-bg/80 backdrop-blur-md" : "border-b border-transparent"
+        scrolled
+          ? "border-b border-line bg-[color:color-mix(in_srgb,var(--bg)_88%,transparent)] backdrop-blur-md"
+          : "border-b border-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
         <div className="flex items-center gap-4">
           {brand}
-          <span className="hidden items-center gap-2 rounded-full border border-line bg-surface px-2.5 py-1 lg:inline-flex">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/70" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-            </span>
-            <span className="label !text-[10px] !text-ink/70">Available for remote work</span>
-          </span>
         </div>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -90,7 +87,7 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`inline-flex items-center gap-1.5 text-sm transition-colors ${
+                className={`inline-flex items-center gap-1.5 font-mono text-[0.8125rem] transition-colors ${
                   active ? "text-ink" : "text-muted hover:text-ink"
                 }`}
               >
@@ -99,12 +96,19 @@ export function SiteHeader() {
               </Link>
             )
           })}
-          <a
-            href={`mailto:${site.email}`}
-            className="rounded-[--radius] bg-accent px-4 py-2 text-sm font-medium text-accent-ink transition-colors hover:bg-accent/90"
-          >
-            Get in touch
-          </a>
+          {/* Theme controls sit with the CTA, not with the links: they are
+              chrome, not navigation. Tighter gap than the nav's gap-8 so the
+              three of them read as one right-hand cluster. */}
+          <div className="flex items-center gap-2">
+            <PalettePicker />
+            <ModeToggle />
+            <a
+              href={`mailto:${site.email}`}
+              className="ml-1 rounded-[--radius] bg-accent px-4 py-2 font-mono text-[0.8125rem] text-accent-ink transition-opacity hover:opacity-90"
+            >
+              Get in touch
+            </a>
+          </div>
         </nav>
 
         <button
@@ -145,10 +149,20 @@ export function SiteHeader() {
                 </Link>
               )
             })}
+            {/* Same controls on mobile - the panel is the only place they fit,
+                and theme must not be desktop-only. No setOpen here: changing
+                the palette should not dismiss the panel you changed it from. */}
+            <div className="mt-3 flex items-center justify-between border-t border-line pt-3">
+              <span className="font-mono text-[0.8125rem] text-muted">Theme</span>
+              <div className="flex items-center gap-2">
+                <PalettePicker />
+                <ModeToggle />
+              </div>
+            </div>
             <a
               href={`mailto:${site.email}`}
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-[--radius] bg-accent px-4 py-2.5 text-center text-sm font-medium text-accent-ink"
+              className="mt-3 rounded-[--radius] bg-accent px-4 py-2.5 text-center font-mono text-[0.8125rem] text-accent-ink"
             >
               Get in touch
             </a>

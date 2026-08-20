@@ -31,7 +31,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
         <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-14">
           {/* Sticky sidebar (collapses above content on mobile) */}
           <aside className="lg:col-span-4 lg:order-2">
-            <dl className="rounded-[--radius] border border-line bg-surface/60 p-6 font-mono text-sm lg:sticky lg:top-28">
+            <dl className="rounded-[--radius] border border-line bg-surface p-6 font-mono text-sm lg:sticky lg:top-28">
               {(
                 [
                   ["Role", study.meta.role],
@@ -66,7 +66,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
                         href={l.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-ink hover:text-accent"
+                        className="inline-flex items-center gap-1 text-ink hover:text-accent-text"
                       >
                         {l.label}
                         <ArrowUpRight className="h-3.5 w-3.5" />

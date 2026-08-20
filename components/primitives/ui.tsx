@@ -15,6 +15,12 @@ export function Eyebrow({ children }: { children: ReactNode }) {
   )
 }
 
+// Tailwind cannot apply an opacity modifier to a colour declared as a bare
+// var(), so `hover:bg-accent/90` compiles to nothing and the primary CTA loses
+// its hover state entirely. color-mix() keeps the intent - accent dimmed toward
+// the page ground - and resolves correctly in every palette and both modes.
+const ACCENT_HOVER = "hover:bg-[color:color-mix(in_srgb,var(--accent)_88%,var(--bg))]"
+
 type CTAProps = ComponentProps<typeof Link> & {
   variant?: "primary" | "ghost"
   external?: boolean
@@ -26,8 +32,8 @@ export function CTA({ variant = "primary", external, className = "", children, .
     "group inline-flex items-center gap-2 rounded-[--radius] px-5 py-3 text-sm font-medium transition-colors"
   const styles =
     variant === "primary"
-      ? "bg-accent text-accent-ink hover:bg-accent/90"
-      : "border border-line text-ink hover:border-ink/40 hover:bg-surface"
+      ? `bg-accent text-accent-ink ${ACCENT_HOVER}`
+      : "border border-line text-ink hover:border-faint hover:bg-surface"
   return (
     <Link
       {...props}

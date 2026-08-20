@@ -7,9 +7,15 @@ export interface NavItem {
   label: string
 }
 
-export interface ProofPoint {
-  value: string
+/**
+ * A measured before/after. `ratio` is width relative to the group's shared
+ * maximum, so the bars render to scale, so these must stay honest, and every
+ * figure below traces to a bullet on the CV.
+ */
+export interface Trace {
   label: string
+  before: { ratio: number; value: string }
+  after: { ratio: number; value: string }
 }
 
 export interface Capability {
@@ -70,10 +76,29 @@ export const coreStack = [
 ]
 
 // Real, verifiable numbers only (from the CV). No invented figures.
-export const proof: ProofPoint[] = [
-  { value: "4+ yrs", label: "Shipping production web apps" },
-  { value: "2×", label: "API throughput at Fanfare" },
-  { value: "~60%", label: "Smaller API payloads at Fanfare" },
+// Every figure here was measured on the same system, which the hero states.
+
+// The one number that leads. Throughput is a higher-is-better measure, so it
+// sits outside the chart rather than inverting the chart's axis.
+export const headlineMetric = {
+  value: "2×",
+  label: "API throughput",
+  detail: "GraphQL resolvers, after DataLoader batching and Redis caching",
+} as const
+
+// Both rows share one axis: the bar is cost, and shorter is better. Keeping the
+// grammar consistent is what lets the bars be read without a legend per row.
+export const traces: Trace[] = [
+  {
+    label: "Response payload",
+    before: { ratio: 1, value: "100%" },
+    after: { ratio: 0.4, value: "~40%" },
+  },
+  {
+    label: "Resolver compute",
+    before: { ratio: 1, value: "100%" },
+    after: { ratio: 0.5, value: "~50%" },
+  },
 ]
 
 export const capabilities: Capability[] = [
