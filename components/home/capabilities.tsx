@@ -20,7 +20,7 @@ export function Capabilities() {
                 <p className="mt-3 flex-1 text-muted">{cap.body}</p>
                 <div className="mt-6 flex flex-wrap gap-1.5">
                   {cap.tools.map((t) => (
-                    <span key={t} className="font-mono text-[11px] text-faint">
+                    <span key={t} className="font-mono text-[11px] text-muted">
                       {t}
                     </span>
                   ))}

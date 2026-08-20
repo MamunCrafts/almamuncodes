@@ -79,5 +79,5 @@ export const fanfare: CaseStudy = {
   ],
   retro:
     "I'd invest earlier in load and query observability. A lot of the tuning was reactive; we found the slow screens by using the app. With per-resolver timing and slow-query logging from day one, we'd have caught the N+1 and cache-miss hotspots before users felt them. I'd also formalise cache invalidation as an event the write path emits, rather than something each mutation remembers to do.",
-  order: 2,
+  order: 4,
 }

@@ -21,7 +21,7 @@ The site has one job: make a hiring manager or technical founder who has 90 seco
 
 - **Name:** [FULL NAME]
 - **Title:** Senior Software Engineer
-- **Location:** [CITY, COUNTRY] — works remotely across [TIMEZONE OVERLAP, e.g. "4+ hours overlap with EST, full overlap with CET"]
+- **Location:** [CITY, COUNTRY] - works remotely across [TIMEZONE OVERLAP, e.g. "4+ hours overlap with EST, full overlap with CET"]
 - **Years of experience:** [N]
 - **Core stack:** TypeScript, Node.js, NestJS, React, Next.js, PostgreSQL, MongoDB, Redis/BullMQ, Docker
 - **Specialisms:** [e.g. backend architecture, distributed systems, ERP and fintech domain work, event-driven systems, multi-tenant SaaS]
@@ -33,9 +33,9 @@ The site has one job: make a hiring manager or technical founder who has 90 seco
 
 Three readers, in priority order:
 
-1. **Technical hiring manager / CTO** — wants proof of depth. Scans for architecture decisions, scale, and whether this person has shipped hard things.
-2. **Technical recruiter** — scans for stack keywords, seniority signals, availability, and how to contact.
-3. **Founder hiring a contractor** — wants to know what problems get solved and how fast.
+1. **Technical hiring manager / CTO** - wants proof of depth. Scans for architecture decisions, scale, and whether this person has shipped hard things.
+2. **Technical recruiter** - scans for stack keywords, seniority signals, availability, and how to contact.
+3. **Founder hiring a contractor** - wants to know what problems get solved and how fast.
 
 Write for reader 1. Readers 2 and 3 are served by clear structure and an obvious contact path.
 
@@ -80,13 +80,13 @@ Skip a blog unless posts already exist. An empty blog is a negative signal.
 
 This is the most important page on the site. Structure each one as:
 
-1. **Context** — the company, the domain, the team size, the person's role
-2. **Problem** — what was broken or missing, stated in business terms
-3. **Constraints** — legacy code, deadline, team skill, budget, compliance
-4. **Approach** — the actual engineering decisions, with the tradeoffs made explicit
-5. **Architecture** — one clear diagram, described in a way the AI can render as SVG or as a labeled flow
-6. **Outcome** — numbers where possible, honest qualitative results where not
-7. **What I would change** — one short paragraph of retrospective. This single section separates senior candidates from everyone else.
+1. **Context** - the company, the domain, the team size, the person's role
+2. **Problem** - what was broken or missing, stated in business terms
+3. **Constraints** - legacy code, deadline, team skill, budget, compliance
+4. **Approach** - the actual engineering decisions, with the tradeoffs made explicit
+5. **Architecture** - one clear diagram, described in a way the AI can render as SVG or as a labeled flow
+6. **Outcome** - numbers where possible, honest qualitative results where not
+7. **What I would change** - one short paragraph of retrospective. This single section separates senior candidates from everyone else.
 
 Include a right-hand sticky sidebar on desktop with role, duration, stack, and team size. Collapse it to a card above the content on mobile.
 

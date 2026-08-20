@@ -15,7 +15,7 @@ export function CaseStudyCard({ study, index }: { study: CaseStudy; index: numbe
       </div>
 
       <div className="sm:col-span-7">
-        <h3 className="text-display-sm transition-colors group-hover:text-accent">
+        <h3 className="text-display-sm transition-colors group-hover:text-accent-text">
           {study.title}
         </h3>
         <p className="mt-3 max-w-xl text-muted">{study.teaser}</p>

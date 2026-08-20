@@ -1,4 +1,6 @@
 import { z } from "zod"
+import { bominbo } from "@/content/work/bominbo"
+import { casaDeco } from "@/content/work/casa-deco"
 import { dgihub } from "@/content/work/dgihub"
 import { fanfare } from "@/content/work/fanfare"
 import { quranAnalyzer } from "@/content/work/quran-analyzer"
@@ -27,7 +29,9 @@ export const caseStudySchema = z.object({
   teaser: z.string(),
   // one hard metric for the card; omit entirely if there is no real number
   metric: z.object({ value: z.string(), label: z.string() }).optional(),
-  cover: z.string(),
+  // Optional: nothing currently renders a cover, and a confidential project
+  // has no screenshot to point at. Kept in the schema for the existing entries.
+  cover: z.string().optional(),
   // omit when the year is not known; the header renders without it
   year: z.string().optional(),
   // sticky sidebar metadata
@@ -55,7 +59,7 @@ export const caseStudySchema = z.object({
 
 export type CaseStudy = z.infer<typeof caseStudySchema>
 
-const registry = z.array(caseStudySchema).parse([dgihub, fanfare, quranAnalyzer])
+const registry = z.array(caseStudySchema).parse([bominbo, casaDeco, dgihub, fanfare, quranAnalyzer])
 
 export function getAllCaseStudies(): CaseStudy[] {
   return [...registry].sort((a, b) => a.order - b.order)

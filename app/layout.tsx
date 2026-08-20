@@ -1,25 +1,31 @@
 import type { Metadata } from "next"
-import { Fraunces, Hanken_Grotesk, JetBrains_Mono } from "next/font/google"
+import { Archivo, Bree_Serif, IBM_Plex_Mono } from "next/font/google"
 import "./globals.css"
 import { PostHogProvider } from "./providers"
+import { ThemeProvider } from "@/components/theme/theme-provider"
+import { DEFAULT_MODE, DEFAULT_PALETTE } from "@/config/palettes"
 import { site } from "@/config/site"
 
-const display = Fraunces({
+/* Three roles, three faces.
+   Bree Serif - display only, upright, restrained scale. Its rounded slabs are
+   the warm note against the cold mineral palette.
+   Archivo - running text. Condensed grotesk; dense technical prose sets tightly.
+   IBM Plex Mono - data and labels. Tabular figures for the trace readouts. */
+const display = Bree_Serif({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
+  weight: "400",
   variable: "--font-display",
   display: "swap",
 })
 
-const sans = Hanken_Grotesk({
+const body = Archivo({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
-  variable: "--font-sans",
+  variable: "--font-body",
   display: "swap",
 })
 
-const mono = JetBrains_Mono({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-mono",
@@ -79,15 +85,45 @@ const personLd = {
   knowsAbout: ["TypeScript", "React", "Next.js", "Node.js", "NestJS", "GraphQL", "PostgreSQL", "MongoDB"],
 }
 
+/* Pre-paint theme resolution. Runs synchronously as the first thing in <body>,
+   before React hydrates and before the browser paints, so there is no flash of
+   the wrong palette and no hydration mismatch to repair.
+
+   It is a raw string: no imports, no JSX, nothing that needs a bundle. The five
+   palette ids and two modes are therefore inlined as literals - THEY MUST STAY
+   IN SYNC WITH `PALETTES` / `MODES` in config/palettes.ts. Adding a palette
+   there without adding it here means that palette can never be restored from
+   localStorage (it silently falls back to graphite).
+
+   Contract: an unknown/garbage/absent stored value falls back to the default
+   and is never written to the DOM. localStorage access throws in some privacy
+   modes, so the whole body is wrapped - if it throws, the attributes keep the
+   server-rendered defaults below, which is the correct fallback. A throwing
+   inline script here would abort before hydration, so this must never throw. */
+const THEME_SCRIPT = `(function(){try{var P=["terracotta","verdigris","olive","aurora","ember","lagoon","orchid","slate"];var M=["dark","light"];var e=document.documentElement;var m=null,p=null;try{m=window.localStorage.getItem("mim-mode");p=window.localStorage.getItem("mim-palette")}catch(x){}e.setAttribute("data-mode",M.indexOf(m)>-1?m:"dark");e.setAttribute("data-palette",P.indexOf(p)>-1?p:"terracotta")}catch(x){}})();`
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`dark ${display.variable} ${sans.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      // Dark-by-default in the server markup, so the site is correct with JS
+      // disabled. THEME_SCRIPT overwrites these before first paint when the
+      // visitor has a stored preference.
+      data-mode={DEFAULT_MODE}
+      data-palette={DEFAULT_PALETTE}
+      // THEME_SCRIPT mutates <html> before React hydrates.
+      suppressHydrationWarning
+      className={`${display.variable} ${body.variable} ${mono.variable}`}
+    >
       <body className="font-sans antialiased">
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }}
         />
-        <PostHogProvider>{children}</PostHogProvider>
+        <ThemeProvider>
+          <PostHogProvider>{children}</PostHogProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

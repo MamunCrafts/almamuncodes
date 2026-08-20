@@ -79,5 +79,5 @@ export const dgihub: CaseStudy = {
   ],
   retro:
     "I'd push harder on observability: per-pipeline health, alerting, and a dashboard for sync latency and failure rates, so problems surface before someone notices missing data. I'd also add a schema-contract check at ingestion so an upstream API change fails loudly at the boundary instead of quietly propagating bad data downstream, plus a first-class backfill tool for re-syncing a source cleanly.",
-  order: 1,
+  order: 3,
 }

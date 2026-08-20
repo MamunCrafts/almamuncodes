@@ -56,7 +56,7 @@ export default function AboutPage() {
           <Reveal>
             <Eyebrow>About</Eyebrow>
             <h1 className="mt-4 max-w-3xl text-display-md">
-              I got into software by trying to <span className="font-display italic text-accent">out-think</span> the problem
+              I got into software by trying to <span className="font-display italic text-accent-text">out-think</span> the problem
             </h1>
           </Reveal>
 
@@ -152,7 +152,7 @@ export default function AboutPage() {
                         <p className="text-sm font-medium text-ink">{h.name}</p>
                         <p className="text-sm text-muted">{h.detail}</p>
                       </div>
-                      <span className="shrink-0 font-mono text-xs text-faint">{h.year}</span>
+                      <span className="shrink-0 font-mono text-xs text-muted">{h.year}</span>
                     </li>
                   ))}
                 </ul>
@@ -165,7 +165,7 @@ export default function AboutPage() {
                         <p className="text-sm font-medium text-ink">{e.name}</p>
                         <p className="text-sm text-muted">{e.org}</p>
                       </div>
-                      <span className="shrink-0 font-mono text-xs text-faint">{e.year}</span>
+                      <span className="shrink-0 font-mono text-xs text-muted">{e.year}</span>
                     </li>
                   ))}
                 </ul>

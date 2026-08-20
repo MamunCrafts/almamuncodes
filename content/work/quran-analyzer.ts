@@ -61,5 +61,5 @@ export const quranAnalyzer: CaseStudy = {
   ],
   retro:
     "I'd give the notes some structure instead of leaving them free-form: tags, or references between passages, so a user can find their own notes again once there are a lot of them. I'd also make the audio more forgiving on poor connections, with clearer loading and less chance of dropping out mid-recitation.",
-  order: 3,
+  order: 5,
 }
