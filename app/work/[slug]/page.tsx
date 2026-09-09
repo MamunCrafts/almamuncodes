@@ -23,7 +23,8 @@ export async function generateMetadata({
     openGraph: {
       title: study.title,
       description: study.teaser,
-      images: [{ url: study.cover }],
+      // Private projects use the site image when no cover is available.
+      images: [{ url: study.cover ?? "/og-image.png" }],
     },
   }
 }

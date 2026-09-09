@@ -29,8 +29,7 @@ export const caseStudySchema = z.object({
   teaser: z.string(),
   // one hard metric for the card; omit entirely if there is no real number
   metric: z.object({ value: z.string(), label: z.string() }).optional(),
-  // Optional: nothing currently renders a cover, and a confidential project
-  // has no screenshot to point at. Kept in the schema for the existing entries.
+  // Only verified project images belong here; omit to use an architecture preview.
   cover: z.string().optional(),
   // omit when the year is not known; the header renders without it
   year: z.string().optional(),

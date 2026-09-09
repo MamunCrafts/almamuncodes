@@ -44,7 +44,7 @@ function Swatch({ palette, mode }: { palette: PaletteId; mode: Mode }) {
  * Enter or Space commits and closes. Escape closes and returns focus to the
  * trigger. Tab leaves and closes without stealing focus.
  */
-export function PalettePicker({ className }: { className?: string }) {
+export function PalettePicker({ className, compact = false }: { className?: string; compact?: boolean }) {
   const { mode, palette, setPalette } = useTheme()
   const [open, setOpen] = useState(false)
   const triggerRef = useRef<HTMLButtonElement | null>(null)
@@ -146,7 +146,7 @@ export function PalettePicker({ className }: { className?: string }) {
         )}
       >
         <PaletteIcon aria-hidden className="h-4 w-4" />
-        <span className="label hidden text-inherit sm:inline">
+        <span className={compact ? "sr-only" : "label hidden text-inherit sm:inline"}>
           {current.name}
         </span>
       </button>

@@ -1,87 +1,70 @@
 import Link from "next/link"
-import { Github, Linkedin } from "lucide-react"
+import { ArrowUpRight, Clock3, Github, Linkedin, MapPin, Phone } from "lucide-react"
 import { site } from "@/config/site"
-import { Container, CTA } from "@/components/primitives/ui"
-import { Reveal } from "@/components/primitives/reveal"
+import { Container } from "@/components/primitives/ui"
 import { CopyEmail } from "@/components/home/copy-email"
 
 export function Contact() {
   return (
-    <section id="contact" className="relative scroll-mt-24 overflow-hidden border-t border-line py-20 lg:py-28">
-      <div className="bg-ruled pointer-events-none absolute inset-0 -z-10" aria-hidden />
+    <section id="contact" className="contact-studio scroll-mt-24 border-t border-line" aria-labelledby="contact-title">
       <Container>
-        <Reveal>
-          <div className="relative overflow-hidden rounded-[calc(var(--radius)+4px)] border border-line bg-surface p-8 sm:p-12 lg:p-16">
-            {/* accent edge: the one bold flourish */}
-            <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent to-transparent" aria-hidden />
-
-            <span className="inline-flex items-center gap-2.5 rounded-full border border-line bg-bg px-3 py-1.5">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
-              </span>
-              <span className="label !text-ink">{site.availability}</span>
-            </span>
-
-            <h2 className="mt-7 max-w-3xl text-display-lg">
-              Let's <span className="font-display italic text-accent-text">talk.</span>
-            </h2>
-            <p className="mt-5 max-w-xl text-lg text-muted">
-              Hiring for a remote team in the UK, US or Australia? Email is the fastest way to reach
-              me, and I reply within a day. Contract or full-time, both welcome.
-            </p>
-
-            {/* Primary action: big, unmissable */}
-            <div className="mt-9 max-w-xl">
-              <CopyEmail email={site.email} />
-              <p className="mt-3 font-mono text-sm text-muted">
-                or call{" "}
-                <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="link-underline text-ink">
-                  {site.phone}
+        <div className="contact-stage">
+          <div className="contact-sculpture">
+            {/* A clear invitation stays separate from the decorative envelope. */}
+            <div className="contact-intro-grid">
+              <div className="contact-intro">
+                <p className="contact-availability"><span aria-hidden="true" />Open to remote opportunities</p>
+                <h2 id="contact-title">Good work starts<br />with a conversation.</h2>
+                <p className="contact-description">
+                  Have a product to build or a team to grow? Let’s talk about it.
+                  I work with teams in the UK, US and Australia. Contract or full-time, both welcome.
+                </p>
+                <a href={`mailto:${site.email}?subject=Let%E2%80%99s%20work%20together`} className="contact-primary">
+                  Start a conversation <ArrowUpRight size={19} aria-hidden="true" />
                 </a>
-              </p>
+              </div>
+
+              {/* CSS surfaces create an envelope without adding image assets or animation code. */}
+              <div className="contact-envelope-scene" aria-hidden="true">
+                <div className="contact-envelope-orbit" />
+                <div className="contact-envelope">
+                  <div className="contact-letter">
+                    <span className="contact-letter-mark">Hello<span>.</span></span>
+                    <span className="contact-letter-line" /><span className="contact-letter-line" />
+                    <span className="contact-letter-signature">Let’s build something good.</span>
+                  </div>
+                  <div className="contact-envelope-back" />
+                  <div className="contact-envelope-front" />
+                  <div className="contact-envelope-seal"><ArrowUpRight size={30} strokeWidth={1.5} /></div>
+                </div>
+                <span className="contact-reply-tag"><Clock3 size={15} />A reply within a day</span>
+              </div>
             </div>
 
-            {/* Secondary actions */}
-            <div className="mt-5 flex flex-wrap items-center gap-3">
-              <CTA href={site.resumeUrl} variant="ghost" external>
-                Download résumé
-              </CTA>
-              <Link
-                href={site.socials.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-[--radius] border border-line px-5 py-3 text-sm font-medium transition-colors hover:border-faint hover:bg-bg"
-              >
-                <Linkedin className="h-4 w-4" /> LinkedIn
-              </Link>
-              <Link
-                href={site.socials.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-[--radius] border border-line px-5 py-3 text-sm font-medium transition-colors hover:border-faint hover:bg-bg"
-              >
-                <Github className="h-4 w-4" /> GitHub
-              </Link>
+            {/* The inset contact dock keeps all real actions available on every screen. */}
+            <div className="contact-dock">
+              <div className="contact-email-block">
+                <p className="mb-3 text-sm text-muted">Prefer to reach out directly?</p>
+                <CopyEmail email={site.email} />
+                <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="contact-phone"><Phone size={14} aria-hidden="true" />{site.phone}</a>
+              </div>
+              <div className="contact-links">
+                <Link href={site.resumeUrl} target="_blank" rel="noopener noreferrer" className="contact-resume">Download résumé <ArrowUpRight size={17} aria-hidden="true" /></Link>
+                <div className="contact-socials">
+                  <Link href={site.socials.linkedin} target="_blank" rel="noopener noreferrer"><Linkedin size={17} aria-hidden="true" />LinkedIn</Link>
+                  <Link href={site.socials.github} target="_blank" rel="noopener noreferrer"><Github size={17} aria-hidden="true" />GitHub</Link>
+                </div>
+              </div>
             </div>
 
-            {/* Meta footer */}
-            <dl className="mt-10 grid gap-x-8 gap-y-4 border-t border-line pt-8 font-mono text-sm sm:grid-cols-3">
-              <div>
-                <dt className="label mb-1.5">Based</dt>
-                <dd className="text-ink">{site.location} · {site.timezone}</dd>
-              </div>
-              <div>
-                <dt className="label mb-1.5">Overlap</dt>
-                <dd className="text-ink">UK/EU AM · US East AM · AU PM</dd>
-              </div>
-              <div>
-                <dt className="label mb-1.5">Response</dt>
-                <dd className="text-ink">Within a day</dd>
-              </div>
+            {/* Working details are readable text rather than part of the illustration. */}
+            <dl className="contact-details">
+              <div><dt><MapPin size={14} aria-hidden="true" />Based in</dt><dd>{site.location} · {site.timezone}</dd></div>
+              <div><dt>Working overlap</dt><dd>UK/EU AM · US East AM · AU PM</dd></div>
+              <div><dt><Clock3 size={14} aria-hidden="true" />Response time</dt><dd>Within a day</dd></div>
             </dl>
           </div>
-        </Reveal>
+        </div>
       </Container>
     </section>
   )

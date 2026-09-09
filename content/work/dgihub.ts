@@ -13,8 +13,7 @@ export const dgihub: CaseStudy = {
     value: "7+",
     label: "SaaS integrations",
   },
-  // Placeholder cover; only used for the social/OG image on this page.
-  cover: "/project-r-case-study-bg-talentpro.webp",
+  // No verified cover: use the architecture preview for this internal project.
   year: "2026",
   meta: {
     role: "Full-Stack Developer",

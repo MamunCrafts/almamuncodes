@@ -46,7 +46,7 @@ const config: Config = {
         // Restrained display scale. The old top end (5rem) let the hero eat a
         // whole viewport; the trace block is the hero's subject now, not the type.
         "display-lg": ["clamp(2rem, 4vw, 3.25rem)", { lineHeight: "1.08", letterSpacing: "-0.015em" }],
-        "display-md": ["clamp(1.625rem, 3vw, 2.375rem)", { lineHeight: "1.12", letterSpacing: "-0.01em" }],
+        "display-md": ["clamp(1.75rem, 3vw, 2.375rem)", { lineHeight: "1.12", letterSpacing: "-0.01em" }],
         "display-sm": ["clamp(1.25rem, 2vw, 1.625rem)", { lineHeight: "1.15", letterSpacing: "-0.005em" }],
       },
       maxWidth: {

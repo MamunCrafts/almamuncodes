@@ -24,7 +24,7 @@ export function SelectedWork() {
         <div className="mt-12">
           {studies.map((study, i) => (
             <Reveal key={study.slug} delay={i * 80}>
-              <CaseStudyCard study={study} index={i} />
+              <CaseStudyCard study={study} index={i} dimensional />
             </Reveal>
           ))}
         </div>

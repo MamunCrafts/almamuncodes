@@ -21,10 +21,10 @@ export function CopyEmail({ email }: { email: string }) {
   // nothing at all and the hover state silently disappears. color-mix() keeps
   // the intent (a slightly dimmed accent) and stays token-driven in every mode.
   return (
-    <div className="flex items-center gap-2 rounded-[--radius] border border-line bg-bg p-2 pl-4 sm:gap-3">
+    <div className="grid grid-cols-[1fr_auto] items-center gap-3 rounded-[--radius] border border-line bg-bg p-3 sm:flex">
       <a
         href={`mailto:${email}?subject=Remote%20role`}
-        className="link-underline min-w-0 flex-1 truncate font-mono text-base text-ink sm:text-lg"
+        className="link-underline col-span-2 min-w-0 flex-1 break-all font-mono text-sm leading-relaxed text-ink"
       >
         {email}
       </a>
@@ -33,7 +33,7 @@ export function CopyEmail({ email }: { email: string }) {
         type="button"
         onClick={copy}
         aria-label={copied ? "Email copied" : "Copy email address"}
-        className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-[calc(var(--radius)-2px)] border border-line px-3 text-sm text-muted transition-colors hover:border-faint hover:text-ink"
+        className="inline-flex h-10 shrink-0 justify-self-start items-center gap-1.5 rounded-[calc(var(--radius)-2px)] border border-line px-3 text-sm text-muted transition-colors hover:border-faint hover:text-ink"
       >
         {copied ? <Check className="h-4 w-4 text-accent-text" /> : <Copy className="h-4 w-4" />}
         <span className="hidden sm:inline">{copied ? "Copied" : "Copy"}</span>

@@ -4,8 +4,8 @@ import { site, highlights, education, credentials } from "@/config/site"
 import { CredentialCard } from "@/components/credential-card"
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
-import { Container, Eyebrow, CTA } from "@/components/primitives/ui"
-import { Reveal } from "@/components/primitives/reveal"
+import { Container, CTA } from "@/components/primitives/ui"
+import { ArrowUpRight, Braces, GraduationCap, MapPin, Trophy } from "lucide-react"
 import { Timeline, type TimelineItem } from "@/components/about/timeline"
 
 export const metadata: Metadata = {
@@ -51,19 +51,44 @@ export default function AboutPage() {
   return (
     <>
       <SiteHeader />
-      <main className="pt-32 pb-24 sm:pt-40">
+      <main className="about-studio">
         <Container>
-          <Reveal>
-            <Eyebrow>About</Eyebrow>
-            <h1 className="mt-4 max-w-3xl text-display-md">
-              I got into software by trying to <span className="font-display italic text-accent-text">out-think</span> the problem
-            </h1>
-          </Reveal>
+          {/* The profile pairs a direct introduction with a dimensional portrait. */}
+          <section className="about-hero" aria-labelledby="about-title">
+            <div className="about-introduction">
+              <p className="about-kicker">A little about me</p>
+              <h1 id="about-title">Problem solver.<br />Product builder.</h1>
+              <p className="about-lead">I’m {site.shortName}, a full-stack developer in {site.location}. I turn complicated problems into software that’s clear, useful, and built to last.</p>
+              <p className="about-role">{site.title} · {site.yearsExperience}+ years in production</p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <CTA href={`mailto:${site.email}`} className="studio-button">Let’s talk</CTA>
+                <CTA href={site.resumeUrl} variant="ghost" external>Download résumé</CTA>
+              </div>
+            </div>
+            {/* One upright portrait keeps the photo and profile details together. */}
+            <figure className="about-profile-stage about-profile-card">
+              <div className="about-portrait">
+                <Image src="/mamun.jpg" alt={site.name} fill sizes="(min-width: 1024px) 360px, (min-width: 640px) 340px, 90vw" priority className="object-cover object-top" />
+              </div>
+              <figcaption className="about-profile-caption">
+                <p className="about-profile-name">{site.name}</p>
+                <p className="about-profile-location"><MapPin size={15} aria-hidden="true" />{site.location}</p>
+                <p className="about-profile-status"><span aria-hidden="true" />Available for remote work</p>
+              </figcaption>
+            </figure>
+          </section>
 
-          <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-14">
-            <div className="lg:col-span-7">
-              <Reveal>
-                <div className="max-w-prose space-y-5 text-lg leading-relaxed text-muted">
+          {/* Existing achievements give the introduction concrete supporting evidence. */}
+          <dl className="about-facts">
+            <div><dt>Production experience</dt><dd>{site.yearsExperience}+ <span>years building web products</span></dd></div>
+            <div><dt>Fanfare GraphQL API</dt><dd>2× <span>API throughput after optimisation</span></dd></div>
+            <div><dt>Competitive programming</dt><dd>600+ <span>problems solved on Codeforces</span></dd></div>
+          </dl>
+
+          {/* Preserve the full personal story instead of replacing it with generic copy. */}
+          <section className="about-story" aria-labelledby="about-story-title">
+            <div className="about-story-heading"><span className="about-section-icon"><Braces size={25} aria-hidden="true" /></span><p className="about-kicker">How I got here</p><h2 id="about-story-title">It started with{" "}<br />a good problem.</h2><p className="about-story-note">From timed contests to production systems.</p></div>
+            <div className="about-prose">
                   <p>
                     I'm {site.shortName}, a full-stack developer based in {site.location}. My way into
                     software wasn't a bootcamp or a framework tutorial; it was competitive
@@ -91,87 +116,44 @@ export default function AboutPage() {
                     Away from the keyboard: still a sucker for a good problem, the kind on a
                     whiteboard or a chessboard, not just a ticket.
                   </p>
-                </div>
-
-                <div className="mt-9 flex flex-wrap gap-3">
-                  <CTA href={`mailto:${site.email}`}>Email me</CTA>
-                  <CTA href={site.resumeUrl} variant="ghost" external>Résumé</CTA>
-                </div>
-              </Reveal>
             </div>
+          </section>
 
-            <div className="lg:col-span-5">
-              <Reveal delay={80}>
-                <div className="group relative aspect-[4/5] w-full max-w-xs overflow-hidden rounded-[--radius] border border-line">
-                  <Image
-                    src="/mamun.jpg"
-                    alt={site.name}
-                    fill
-                    sizes="320px"
-                    className="object-cover grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0"
-                  />
-                </div>
-              </Reveal>
-            </div>
-          </div>
-
-          {/* Timeline */}
-          <div className="mt-20 grid gap-12 lg:grid-cols-12 lg:gap-14">
-            <div className="lg:col-span-7">
-              <Reveal>
-                <Eyebrow>Path</Eyebrow>
-                <div className="mt-8">
-                  <Timeline items={timeline} />
-                </div>
-              </Reveal>
-            </div>
-
-            <div className="lg:col-span-5">
-              <Reveal delay={80}>
-                {/* Highlighted credentials */}
-                <div className="mb-10 space-y-4">
-                  <CredentialCard
-                    kind="recognition"
-                    title={credentials.recognition.title}
-                    org={credentials.recognition.org}
-                    note={credentials.recognition.note}
-                  />
-                  <CredentialCard
-                    kind="certification"
-                    title={credentials.certification.title}
-                    org={credentials.certification.org}
-                    url={credentials.certification.url}
-                  />
-                </div>
-
-                <Eyebrow>Competitive programming</Eyebrow>
-                <ul className="mt-8 divide-y divide-line rounded-[--radius] border border-line">
-                  {highlights.map((h) => (
-                    <li key={h.name} className="flex items-baseline justify-between gap-4 p-4">
-                      <div>
-                        <p className="text-sm font-medium text-ink">{h.name}</p>
-                        <p className="text-sm text-muted">{h.detail}</p>
-                      </div>
-                      <span className="shrink-0 font-mono text-xs text-muted">{h.year}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <p className="label mt-8">Education</p>
-                <ul className="mt-4 divide-y divide-line rounded-[--radius] border border-line">
-                  {education.map((e) => (
-                    <li key={e.name} className="flex items-baseline justify-between gap-4 p-4">
-                      <div>
-                        <p className="text-sm font-medium text-ink">{e.name}</p>
-                        <p className="text-sm text-muted">{e.org}</p>
-                      </div>
-                      <span className="shrink-0 font-mono text-xs text-muted">{e.year}</span>
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
+          {/* Career entries remain chronological; supporting achievements sit alongside them. */}
+          <div className="about-career-grid">
+            <section aria-labelledby="about-career-title">
+              <p className="about-kicker">The path so far</p>
+              <h2 id="about-career-title" className="about-section-title">Growing with the work.</h2>
+              <div className="about-timeline"><Timeline items={timeline} /></div>
+            </section>
+            <div className="about-background">
+              <section className="about-detail-card" aria-labelledby="about-contests-title">
+                <span className="about-section-icon"><Trophy size={24} aria-hidden="true" /></span>
+                <h2 id="about-contests-title">Competitive programming</h2>
+                <ul>{highlights.map((highlight) => <li key={highlight.name}><span className="about-detail-year">{highlight.year}</span><h3>{highlight.name}</h3><p>{highlight.detail}</p></li>)}</ul>
+              </section>
+              <section className="about-detail-card" aria-labelledby="about-education-title">
+                <span className="about-section-icon"><GraduationCap size={24} aria-hidden="true" /></span>
+                <h2 id="about-education-title">Education</h2>
+                <ul>{education.map((item) => <li key={item.name}><span className="about-detail-year">{item.year}</span><h3>{item.name}</h3><p>{item.org}</p></li>)}</ul>
+              </section>
             </div>
           </div>
+
+          {/* Reuse the shared credential styling, including MongoDB's green accents. */}
+          <section className="about-credentials" aria-labelledby="about-credentials-title">
+            <h2 id="about-credentials-title" className="about-section-title">Recognition &amp; certification</h2>
+            <div className="about-credentials-grid">
+              <CredentialCard kind="recognition" title={credentials.recognition.title} org={credentials.recognition.org} note={credentials.recognition.note} />
+              <CredentialCard kind="certification" title={credentials.certification.title} org={credentials.certification.org} url={credentials.certification.url} />
+            </div>
+          </section>
+
+          {/* Close with a direct route from the biography to the actual work. */}
+          <section className="about-next-step" aria-labelledby="about-next-title">
+            <div><p className="about-kicker">The story continues in the work</p><h2 id="about-next-title">See what I’ve built.</h2></div>
+            <CTA href="/work" className="studio-button">Explore the projects <ArrowUpRight size={18} aria-hidden="true" /></CTA>
+          </section>
         </Container>
       </main>
       <SiteFooter />

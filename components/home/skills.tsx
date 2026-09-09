@@ -1,39 +1,52 @@
+import { Braces, Cloud, Database, MessagesSquare, Server, ShieldCheck } from "lucide-react"
 import { skillGroups } from "@/config/site"
 import { Container, Eyebrow } from "@/components/primitives/ui"
-import { Reveal } from "@/components/primitives/reveal"
+
+// Category icons describe each layer without depending on its position in the list.
+const categoryIcons = {
+  Frontend: Braces,
+  Backend: Server,
+  Databases: Database,
+  "Cloud & DevOps": Cloud,
+  Testing: ShieldCheck,
+  "Remote & process": MessagesSquare,
+}
 
 export function Skills() {
   return (
-    <section id="skills" className="scroll-mt-24 border-t border-line py-20 lg:py-28">
+    <section id="skills" className="skills-studio scroll-mt-24 border-t border-line py-20 lg:py-28" aria-labelledby="skills-title">
       <Container>
-        <Reveal>
+        {/* Keep the introduction outside the dimensional panels. */}
+        <div>
           <Eyebrow>Toolkit</Eyebrow>
-          <h2 className="mt-4 max-w-2xl text-display-md">The stack I reach for</h2>
+          <h2 id="skills-title" className="mt-4 max-w-2xl text-display-md">The stack I reach for</h2>
           <p className="mt-4 max-w-xl text-muted">
             Technologies I use day to day and can talk through in depth, not a checklist of
             everything I've ever touched.
           </p>
-        </Reveal>
+        </div>
 
-        <div className="mt-12 grid gap-px overflow-hidden rounded-[--radius] border border-line bg-line md:grid-cols-3">
-          {skillGroups.map((group, i) => (
-            <Reveal key={group.title} delay={i * 60} as="div" className="bg-bg">
-              <div className="h-full p-7 lg:p-8">
-                <div className="flex items-baseline justify-between">
-                  <h3 className="font-display text-lg text-ink">{group.title}</h3>
-                  <span className="label">{String(i + 1).padStart(2, "0")}</span>
-                </div>
-                <ul className="mt-5 space-y-2.5">
-                  {group.skills.map((skill) => (
-                    <li key={skill} className="flex items-center gap-2.5 font-mono text-sm text-muted">
-                      <span className="h-1 w-1 shrink-0 rounded-full bg-accent" />
-                      {skill}
-                    </li>
-                  ))}
-                </ul>
+        {/* Static semantic lists remain readable without scripts or hover. */}
+        <div className="skills-platform-grid">
+          {skillGroups.map((group) => {
+            const Icon = categoryIcons[group.title as keyof typeof categoryIcons] ?? Braces
+            return (
+              <div key={group.title} className="skills-platform-stage">
+                <article className="skills-platform">
+                  <div className="skills-platform-heading">
+                    <span className="skills-platform-icon"><Icon size={23} strokeWidth={1.6} aria-hidden="true" /></span>
+                    <h3>{group.title}</h3>
+                  </div>
+                  <ul className="skills-platform-list">
+                    {group.skills.map((skill) => (
+                      <li key={skill} className="skills-key">{skill}</li>
+                    ))}
+                  </ul>
+                  <div className="skills-platform-foot" aria-hidden="true"><span /><span /><span /></div>
+                </article>
               </div>
-            </Reveal>
-          ))}
+            )
+          })}
         </div>
       </Container>
     </section>
