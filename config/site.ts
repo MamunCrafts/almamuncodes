@@ -25,8 +25,8 @@ export interface Capability {
 }
 
 export const site = {
-  name: "Md. Al Mamun Mim",
-  shortName: "Mamun",
+  name: "Md. AL Mamun Mim",
+  shortName: "Md. AL Mamun Mim",
   title: "Senior Full-Stack Developer",
   // Concrete, specific positioning, not "passionate developer".
   positioning:

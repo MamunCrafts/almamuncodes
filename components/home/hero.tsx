@@ -18,7 +18,7 @@ export function Hero() {
             <h1 id="hero-title" className="studio-title">Web products,<br />built end to end.</h1>
             <p className="mt-7 max-w-md text-base leading-relaxed text-muted sm:text-lg">
               I’m {site.shortName}. I build React interfaces, NestJS APIs, and the data layers
-              behind them—and make them measurably faster.
+              behind them, and make them measurably faster.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <CTA href="#work" className="studio-button">View my work</CTA>
