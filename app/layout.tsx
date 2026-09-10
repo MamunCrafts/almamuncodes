@@ -5,6 +5,7 @@ import { PostHogProvider } from "./providers"
 import { ThemeProvider } from "@/components/theme/theme-provider"
 import { DEFAULT_MODE, DEFAULT_PALETTE } from "@/config/palettes"
 import { site } from "@/config/site"
+import { PortfolioChatbot } from "@/components/home/portfolio-chatbot"
 
 /* Three roles, three faces.
    Bree Serif - display only, upright, restrained scale. Its rounded slabs are
@@ -122,7 +123,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }}
         />
         <ThemeProvider>
-          <PostHogProvider>{children}</PostHogProvider>
+          <PostHogProvider>
+            {children}
+            <PortfolioChatbot />
+          </PostHogProvider>
         </ThemeProvider>
       </body>
     </html>
