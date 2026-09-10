@@ -23,7 +23,7 @@ export interface Palette {
 }
 
 export const PALETTES: Palette[] = [
-  { id: "terracotta", name: "Terracotta", note: "Warm clay · burnt orange and teal" },
+  { id: "terracotta", name: "Calm Studio", note: "Soft paper · muted teal and sage" },
   { id: "verdigris", name: "Verdigris", note: "Oxidised copper · teal and green" },
   { id: "olive", name: "Olive", note: "Warm green · leaf and terracotta" },
   { id: "aurora", name: "Aurora", note: "Indigo night · violet and cyan" },
@@ -34,7 +34,7 @@ export const PALETTES: Palette[] = [
 ]
 
 export const DEFAULT_PALETTE: PaletteId = "terracotta"
-export const DEFAULT_MODE: Mode = "dark"
+export const DEFAULT_MODE: Mode = "light"
 
 /** localStorage keys. Read by the pre-paint script in app/layout.tsx. */
 export const STORAGE_KEYS = {

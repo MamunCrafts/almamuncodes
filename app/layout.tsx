@@ -93,20 +93,20 @@ const personLd = {
    palette ids and two modes are therefore inlined as literals - THEY MUST STAY
    IN SYNC WITH `PALETTES` / `MODES` in config/palettes.ts. Adding a palette
    there without adding it here means that palette can never be restored from
-   localStorage (it silently falls back to graphite).
+   localStorage (it silently falls back to Calm Studio).
 
    Contract: an unknown/garbage/absent stored value falls back to the default
    and is never written to the DOM. localStorage access throws in some privacy
    modes, so the whole body is wrapped - if it throws, the attributes keep the
    server-rendered defaults below, which is the correct fallback. A throwing
    inline script here would abort before hydration, so this must never throw. */
-const THEME_SCRIPT = `(function(){try{var P=["terracotta","verdigris","olive","aurora","ember","lagoon","orchid","slate"];var M=["dark","light"];var e=document.documentElement;var m=null,p=null;try{m=window.localStorage.getItem("mim-mode");p=window.localStorage.getItem("mim-palette")}catch(x){}e.setAttribute("data-mode",M.indexOf(m)>-1?m:"dark");e.setAttribute("data-palette",P.indexOf(p)>-1?p:"terracotta")}catch(x){}})();`
+const THEME_SCRIPT = `(function(){try{var P=["terracotta","verdigris","olive","aurora","ember","lagoon","orchid","slate"];var M=["dark","light"];var e=document.documentElement;var m=null,p=null;try{m=window.localStorage.getItem("mim-mode");p=window.localStorage.getItem("mim-palette")}catch(x){}e.setAttribute("data-mode",M.indexOf(m)>-1?m:"light");e.setAttribute("data-palette",P.indexOf(p)>-1?p:"terracotta")}catch(x){}})();`
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
-      // Dark-by-default in the server markup, so the site is correct with JS
+      // Light-by-default in the server markup, so the site is correct with JS
       // disabled. THEME_SCRIPT overwrites these before first paint when the
       // visitor has a stored preference.
       data-mode={DEFAULT_MODE}

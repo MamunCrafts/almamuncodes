@@ -157,31 +157,31 @@
   --radius: 0.625rem;
 }
 
-/* Terracotta, dark - Warm clay · burnt orange and teal. */
+/* Calm Studio, dark - quiet ink · muted teal and sage. */
 [data-palette="terracotta"] {
-  --bg: #1f150f;
-  --surface: #3c2a20;
-  --raised: #4e392d;
-  --line: #5d4537;
+  --bg: #101615;
+  --surface: #1a2321;
+  --raised: #23302d;
+  --line: #33423e;
 
-  --ink: #f6f1ef;
-  --muted: #cbb9ae;
-  --faint: #987f71;
+  --ink: #f3f1eb;
+  --muted: #b8c0ba;
+  --faint: #7f8d87;
 
-  --accent: #b35a16;
-  --accent-ink: #fbfaf9;
-  --accent-text: #ec9f65;
-  --accent-2: #eebe4f;
-  --accent-weak: #4e3627;
+  --accent: #6aa79b;
+  --accent-ink: #0d1413;
+  --accent-text: #91c9bf;
+  --accent-2: #8cae7a;
+  --accent-weak: #263a36;
 
-  --slow-fill: #b6392b;
-  --fast-fill: #29aea9;
-  --slow: #e5988f;
-  --fast: #6adcd8;
+  --slow-fill: #9c6654;
+  --fast-fill: #5f9270;
+  --slow: #d5a294;
+  --fast: #a9cfb5;
 
-  --tint: #4e3627;
-  --glow-1: #4c3322;
-  --glow-2: #3c2d18;
+  --tint: #263a36;
+  --glow-1: #1f312e;
+  --glow-2: #273322;
 
   --radius: 0.625rem;
 }
@@ -391,31 +391,31 @@
   --radius: 0.625rem;
 }
 
-/* Terracotta, light. */
+/* Calm Studio, light - soft paper · muted teal and sage. */
 [data-mode="light"][data-palette="terracotta"] {
-  --bg: #f9f2ee;
-  --surface: #ead8cc;
-  --raised: #dfc6b7;
-  --line: #cba995;
+  --bg: #f6f4ef;
+  --surface: #ece7de;
+  --raised: #ffffff;
+  --line: #d8d1c4;
 
-  --ink: #251a13;
-  --muted: #674e40;
-  --faint: #9c8577;
+  --ink: #1f2926;
+  --muted: #66736d;
+  --faint: #98a099;
 
-  --accent: #b35a16;
-  --accent-ink: #fbfaf9;
-  --accent-text: #814110;
-  --accent-2: #886616;
-  --accent-weak: #e1c6b3;
+  --accent: #2f7d73;
+  --accent-ink: #fbfffd;
+  --accent-text: #276b62;
+  --accent-2: #6d8f5f;
+  --accent-weak: #dce7e2;
 
-  --slow-fill: #cc301e;
-  --fast-fill: #179b97;
-  --slow: #9e2518;
-  --fast: #0e5c59;
+  --slow-fill: #a8644a;
+  --fast-fill: #4f8f6b;
+  --slow: #7f4d3a;
+  --fast: #386a4e;
 
-  --tint: #e1c6b3;
-  --glow-1: #eedcd0;
-  --glow-2: #efe5db;
+  --tint: #dce7e2;
+  --glow-1: #e7eee9;
+  --glow-2: #eee9dc;
 
   --radius: 0.625rem;
 }
