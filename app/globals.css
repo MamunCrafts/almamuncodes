@@ -802,17 +802,20 @@ hr {
   .engineering-scene { width: min(100%, 520px); margin: 0 auto 2rem; }
 }
 @media (max-width: 639px) {
-  .engineering-scene { height: 480px; }
-  .scene-model { transform: none; }
-  .scene-slab { width: 88%; left: 6%; transform: rotateX(15deg) rotateZ(-4deg); }
-  .scene-browser { top: 15px; }
-  .scene-api { top: 278px; }
-  .scene-database { top: 380px; }
-  .scene-dashboard { min-height: 175px; }
+  /* Mobile scene keeps all layers inside a fixed drawing area. */
+  .engineering-scene { height: auto; margin-bottom: 2.75rem; padding-bottom: 0; perspective: none; }
+  .scene-model { position: relative; height: 500px; transform: none; }
+  .scene-slab { width: min(92%, 340px); left: 50%; transform: translateX(-50%) rotateX(10deg) rotateZ(-3deg); }
+  .scene-browser { top: 12px; }
+  .scene-api { top: 272px; }
+  .scene-database { top: 374px; }
+  .scene-dashboard { min-height: 170px; }
   .scene-dashboard-content { padding: 12px; }
-  .scene-chart { height: 58px; }
+  .scene-chart { height: 56px; }
   .scene-floor { display: none; }
-  .scene-caption { bottom: -12px; }
+
+  /* Caption uses normal spacing so it cannot overlap the next section. */
+  .scene-caption { position: relative; bottom: auto; margin-top: .75rem; padding: 0 1rem; line-height: 1.5; }
   .studio-project-surface { transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
