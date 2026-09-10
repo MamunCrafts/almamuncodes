@@ -1,7 +1,6 @@
 import { ImageResponse } from "next/og"
 
-// Home-screen icon for iOS (180×180). iOS rounds the corners itself, so this
-// is full-bleed tangerine with a large dark "M".
+// Home-screen icon for iOS using the same mark as the favicon.
 export const size = { width: 180, height: 180 }
 export const contentType = "image/png"
 
@@ -15,14 +14,15 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#FF6A2B",
-          color: "#100F0D",
-          fontSize: 120,
-          fontWeight: 700,
+          background: "#100F0D",
+          color: "#FFF4E8",
+          fontSize: 80,
+          fontWeight: 800,
           fontFamily: "sans-serif",
+          border: "14px solid #FF6A2B",
         }}
       >
-        M
+        AM
       </div>
     ),
     { ...size },
